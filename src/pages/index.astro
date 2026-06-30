@@ -6,9 +6,29 @@ import TechForceGraph from '../components/canvas/TechForceGraph';
 import AIAvatar from '../components/ui/AIAvatar';
 import HackerTerminal from '../components/terminal/HackerTerminal';
 import KeyboardManager from '../components/KeyboardManager';
+import CinematicLoader from '../components/ui/CinematicLoader';
+
+const activeTheme = PORTFOLIO_CONFIG.themeEngine[0].tokens;
 ---
 
 <Layout title={PORTFOLIO_CONFIG.globalMetadata.siteName}>
+  <!-- Theme Injection -->
+  <style define:vars={{
+    bgPrimary: activeTheme.background,
+    primary: activeTheme.primary,
+    secondary: activeTheme.surface,
+    accent: activeTheme.accent
+  }}>
+    :root {
+      --bg-primary: var(--bgPrimary);
+      --color-primary: var(--primary);
+      --color-secondary: var(--secondary);
+      --color-accent: var(--accent);
+    }
+  </style>
+
+  <!-- Phase 4 Loader -->
+  <CinematicLoader client:load />
   <!-- Phase 3 UI Overlays -->
   <KeyboardManager client:load />
   <HackerTerminal client:only="react" />

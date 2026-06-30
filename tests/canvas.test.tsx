@@ -20,7 +20,8 @@ vi.mock('@react-three/fiber', () => ({
 }));
 
 vi.mock('@react-three/drei', () => ({
-  Stars: () => <div data-testid="mock-stars" />
+  Stars: () => <div data-testid="mock-stars" />,
+  PerformanceMonitor: () => <div data-testid="mock-perf-monitor" />
 }));
 
 vi.mock('@react-three/rapier', () => ({

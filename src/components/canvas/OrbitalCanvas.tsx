@@ -5,6 +5,7 @@ import { Stars } from '@react-three/drei';
 import ProjectSwarm from './ProjectSwarm';
 import CertificationRing from './CertificationRing';
 import CameraController from './CameraController';
+import PerformanceManager from './PerformanceManager';
 
 export default function OrbitalCanvas() {
   return (
@@ -19,6 +20,7 @@ export default function OrbitalCanvas() {
         
         <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
         
+        <PerformanceManager />
         <CameraController />
         
         <Physics gravity={[0, 0, 0]}>
