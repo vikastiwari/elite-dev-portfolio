@@ -37,18 +37,16 @@ describe('Polish Components', () => {
     expect(getByTestId('cinematic-loader')).toBeInTheDocument();
   });
 
-  it('hides CinematicLoader when progress is 100 and inactive', () => {
+  it('hides CinematicLoader when Initialize System is clicked', () => {
     mockProgress = { active: false, progress: 100 };
-    vi.useFakeTimers();
-    const { queryByTestId } = render(<CinematicLoader />);
+    const { getByText, queryByTestId } = render(<CinematicLoader />);
     
-    // Fast forward timeout
+    const button = getByText('Initialize System');
     act(() => {
-      vi.advanceTimersByTime(1000);
+      button.click();
     });
     
     expect(queryByTestId('cinematic-loader')).not.toBeInTheDocument();
-    vi.useRealTimers();
   });
 
   it('hides immediately in tests when inactive and progress is 0', () => {

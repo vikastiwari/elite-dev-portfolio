@@ -161,6 +161,32 @@ const activeTheme = PORTFOLIO_CONFIG.themeEngine[0].tokens;
       </div>
   </section>
 
+  <!-- Experience Section -->
+  <section id="experience" class="py-24 relative z-10 bg-dark-900/40 border-t border-white/5">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-16 reveal">
+              <h2 class="font-display text-4xl md:text-5xl font-bold mb-4">Certifications & <span class="text-brand-500">Experience</span></h2>
+              <div class="h-1 w-20 bg-brand-500 mx-auto rounded-full mb-6"></div>
+              <p class="text-slate-400 max-w-2xl mx-auto">A relentless pursuit of knowledge with 37+ verified certifications.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {PORTFOLIO_CONFIG.certificationGraph.map((cert) => (
+                  <div class="glass-card p-6 rounded-xl reveal hover:-translate-y-1 transition-transform border border-white/5 hover:border-brand-500/30 group">
+                      <div class="text-brand-400 font-mono text-xs mb-2">{cert.date}</div>
+                      <h3 class="font-display font-bold text-lg mb-1 leading-tight group-hover:text-white transition-colors">{cert.title}</h3>
+                      <p class="text-slate-400 text-sm mb-4">{cert.issuer}</p>
+                      <div class="flex flex-wrap gap-2 mt-auto">
+                          {cert.tags.map(tag => (
+                              <span class="text-xs px-2 py-1 bg-white/5 rounded-full text-slate-300">{tag}</span>
+                          ))}
+                      </div>
+                  </div>
+              ))}
+          </div>
+      </div>
+  </section>
+
   <!-- Projects Section -->
   <section id="projects" class="py-24 relative z-10">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
