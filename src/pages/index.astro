@@ -1,15 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { PORTFOLIO_CONFIG } from '../config/portfolio.config';
+import OrbitalCanvas from '../components/canvas/OrbitalCanvas';
+import TechForceGraph from '../components/canvas/TechForceGraph';
 ---
 
 <Layout title={PORTFOLIO_CONFIG.globalMetadata.siteName}>
-  <!-- Background Animation -->
-  <div class="bg-mesh">
-      <div class="mesh-blob-1 animate-blob animate-pulse-glow"></div>
-      <div class="mesh-blob-2 animate-blob-reverse animate-pulse-glow"></div>
-      <div class="mesh-blob-3 animate-blob animate-pulse-glow"></div>
-  </div>
+  <!-- WebGL Background and Graph -->
+  <OrbitalCanvas client:load />
+  <TechForceGraph client:load />
 
   <!-- Sticky Navigation -->
   <nav class="fixed w-full z-50 top-0 transition-all duration-300 glass border-b-0" id="navbar">
