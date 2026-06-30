@@ -1,0 +1,67 @@
+---
+import { PORTFOLIO_CONFIG } from '../config/portfolio.config';
+---
+
+<div id="recruiter-resume" class="max-w-4xl mx-auto p-8 font-sans text-gray-900 bg-white min-h-screen transition-opacity duration-500">
+  <header class="border-b-4 border-gray-900 pb-6 mb-8">
+    <h1 class="text-5xl font-extrabold tracking-tight mb-2">{PORTFOLIO_CONFIG.personalProfile.name}</h1>
+    <h2 class="text-2xl text-gray-600 mb-4">{PORTFOLIO_CONFIG.personalProfile.titles.join(' | ')}</h2>
+    <div class="flex gap-4 text-sm font-semibold">
+      <a href={PORTFOLIO_CONFIG.personalProfile.contact.github} class="text-blue-600 hover:underline">GitHub</a>
+      <a href={PORTFOLIO_CONFIG.personalProfile.contact.linkedin} class="text-blue-600 hover:underline">LinkedIn</a>
+      <a href={`mailto:${PORTFOLIO_CONFIG.personalProfile.contact.email}`} class="text-blue-600 hover:underline">Email</a>
+    </div>
+  </header>
+
+  <section class="mb-12">
+    <h3 class="text-3xl font-bold border-b-2 border-gray-300 pb-2 mb-6">Core Architecture Projects</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {PORTFOLIO_CONFIG.projectMatrix.map(proj => (
+        <article class="bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm">
+          <div class="flex justify-between items-start mb-2">
+            <h4 class="text-xl font-bold text-gray-900">{proj.title}</h4>
+            <span class={`text-xs px-2 py-1 rounded font-bold ${proj.status === 'Production' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+              {proj.status}
+            </span>
+          </div>
+          <p class="text-gray-700 mb-4 text-sm leading-relaxed">{proj.architectureSummary}</p>
+          <div class="flex flex-wrap gap-2">
+            {proj.techStack.map(tech => (
+              <span class="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded">{tech}</span>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h3 class="text-3xl font-bold border-b-2 border-gray-300 pb-2 mb-6">Elite Certifications & Education</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {PORTFOLIO_CONFIG.certificationGraph.map(cert => (
+        <div class="flex items-center p-4 border border-gray-200 rounded">
+          <div>
+            <h4 class="font-bold text-gray-900">{cert.title}</h4>
+            <p class="text-sm text-gray-600">{cert.issuer} • {cert.date}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</div>
+
+<script>
+  // Listen to Zustand store changes from the window
+  window.addEventListener('portfolio-state-change', (e: any) => {
+    const resume = document.getElementById('recruiter-resume');
+    if (resume) {
+      if (e.detail.isRecruiterMode) {
+        resume.style.display = 'block';
+        resume.style.opacity = '1';
+      } else {
+        resume.style.display = 'none';
+        resume.style.opacity = '0';
+      }
+    }
+  });
+</script>

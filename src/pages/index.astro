@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import RecruiterToggle from '../components/RecruiterToggle';
+import RecruiterResume from '../components/RecruiterResume.astro';
+import Scene from '../components/canvas/Scene';
+import TerminalOverlay from '../components/Terminal';
+import { PORTFOLIO_CONFIG } from '../config/portfolio.config';
+---
+
+<Layout title={PORTFOLIO_CONFIG.globalMetadata.siteName}>
+  <RecruiterToggle client:load />
+  <TerminalOverlay client:load />
+
+  <!-- WebGL Canvas Layer -->
+  <div id="webgl-container" class="absolute inset-0 z-0">
+    <Scene client:only="react" />
+  </div>
+
+  <!-- HTML Resume Layer -->
+  <div id="resume-container" class="absolute inset-0 z-10 overflow-y-auto" style="display: none; opacity: 0;">
+    <RecruiterResume />
+  </div>
+</Layout>
+
+<script>
+  const webglContainer = document.getElementById('webgl-container');
+  const resumeContainer = document.getElementById('resume-container');
+
+  window.addEventListener('portfolio-state-change', (e: any) => {
+    if (e.detail.isRecruiterMode) {
+      if (webglContainer) webglContainer.style.display = 'none';
+      if (resumeContainer) {
+        resumeContainer.style.display = 'block';
+        setTimeout(() => {
+          resumeContainer.style.opacity = '1';
+        }, 50);
+      }
+    } else {
+      if (resumeContainer) resumeContainer.style.opacity = '0';
+      setTimeout(() => {
+        if (resumeContainer) resumeContainer.style.display = 'none';
+        if (webglContainer) webglContainer.style.display = 'block';
+      }, 500); // Wait for transition
+    }
+  });
+</script>
