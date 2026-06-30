@@ -35,8 +35,8 @@ const activeTheme = PORTFOLIO_CONFIG.themeEngine[0].tokens;
   <AIAvatar client:load />
 
   <!-- WebGL Background and Graph -->
-  <OrbitalCanvas client:load />
-  <TechForceGraph client:load />
+  <OrbitalCanvas client:only="react" />
+  <TechForceGraph client:only="react" />
 
   <!-- Sticky Navigation -->
   <nav class="fixed w-full z-50 top-0 transition-all duration-300 glass border-b-0" id="navbar">
