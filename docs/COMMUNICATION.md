@@ -1,55 +1,22 @@
-# Communication & Event Bus Architecture
+# Communication Strategy
 
-## 1. The Challenge of Hybrid Architectures
+## DOM to Canvas Communication
+A common pitfall in WebGL React applications is prop-drilling state changes from HTML UI overlays down into the 3D scene, which triggers expensive React reconciliations and drops frames.
 
-Because the `elite-dev-portfolio` utilizes Astro to mix statically generated HTML (Server-Side) with highly dynamic React components (Client-Side Islands), we cannot rely purely on standard React Context providers. Wrapping the entire Astro application in a React Context would defeat the purpose of Astro's zero-JS Island architecture.
+To solve this, we rely on **Zustand** as a transient state manager.
 
-## 2. The Dual-Pronged Strategy
+### The Zustand Store
+`useStore.ts` acts as the single source of truth.
+- **DOM Components** (like a theme toggle button) call standard state setters (e.g., `setTheme('cyberpunk')`).
+- **Canvas Components** do *not* subscribe to the reactive state directly if it causes re-renders. Instead, they use `useStore.getState()` inside the `useFrame` loop, or subscribe to transient updates, mutating object references directly.
 
-We employ a strict separation of concerns for inter-component communication:
+### Example: Theme Switching
+1. User clicks the "Matrix" theme button in the DOM `HUD.tsx`.
+2. Zustand state `theme` updates.
+3. A `useEffect` in the DOM updates CSS variables for HTML colors.
+4. A subscriber in `Scene.tsx` detects the change and pushes the new hex colors to a WebGPU Shader Uniform, instantly updating the 3D lighting without re-mounting any geometries.
 
-### A. Zustand (`usePortfolioStore.ts`)
-Used **exclusively** for React-to-React communication within and across isolated React Islands.
-- **Mechanism:** Zustand provides a lightweight, global store outside the React tree. Components subscribe only to the specific slices of state they need.
-- **Example Use Case:** The `RecruiterToggle.tsx` updates `isRecruiterMode` in the store. The `Terminal.tsx` (a completely separate island) listens to this store and unmounts itself when the mode is active.
-
-### B. Custom Window Events (The Vanilla DOM Bus)
-Used for React-to-Astro (Vanilla JS) communication.
-- **Mechanism:** We leverage the browser's native EventTarget API. When a React component needs to trigger a change in the static HTML layer, it dispatches a `CustomEvent` to the global `window` object.
-- **Performance Benefit:** This completely bypasses React's virtual DOM reconciliation cycle. Vanilla JS event listeners attached in Astro scripts manipulate the DOM (`display: none`, `opacity: 0`) with absolute zero latency.
-
-## 3. Implementation Example
-
-**Dispatching from React (`RecruiterToggle.tsx`):**
-```typescript
-const toggleMode = () => {
-  const newMode = !isRecruiterMode;
-  setRecruiterMode(newMode);
-  
-  // Dispatch native event for Astro static HTML layers to consume
-  window.dispatchEvent(
-    new CustomEvent('portfolio-state-change', {
-      detail: { isRecruiterMode: newMode },
-    })
-  );
-};
-```
-
-**Listening in Astro (`Layout.astro` or `index.astro`):**
-```javascript
-<script>
-  window.addEventListener('portfolio-state-change', (e) => {
-    const isRecruiterMode = e.detail.isRecruiterMode;
-    const webglContainer = document.getElementById('webgl-container');
-    const resumeContainer = document.getElementById('resume-container');
-    
-    if (isRecruiterMode) {
-      webglContainer.style.display = 'none';
-      resumeContainer.style.display = 'block';
-    } else {
-      webglContainer.style.display = 'block';
-      resumeContainer.style.display = 'none';
-    }
-  });
-</script>
-```
+## Client to Edge AI Communication
+- The AI chat interface connects to `/api/chat`.
+- To mask Time-To-First-Token (TTFT) latency, the Edge function streams the LLM response back to the client using **Server-Sent Events (SSE)**.
+- The UI handles the incoming stream chunk-by-chunk to create the typing effect.

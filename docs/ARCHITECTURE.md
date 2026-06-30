@@ -1,63 +1,46 @@
-# Elite Developer Portfolio - Architecture
+# Architectural Blueprint
 
-## 1. Executive Summary
-The `elite-dev-portfolio` is built on a high-performance, hybrid rendering architecture designed to balance immersive WebGL experiences with maximum SEO, ATS (Applicant Tracking Systems) accessibility, and absolute zero-latency for corporate recruiters.
+This document outlines the core architecture for the "God-Tier" WebGL Portfolio, employing an **HFT Orbital Command** paradigm.
 
-By leveraging an Astro-first approach, we serve static HTML instantly while progressively enhancing the user experience with React 19 Islands and React Three Fiber (R3F).
+## System Architecture
 
-## 2. Core Technology Stack
-- **Astro 5:** The underlying meta-framework. Responsible for routing, layout structuring, and generating zero-JS static HTML payloads by default.
-- **React 19:** Powers the interactive client-side components (Islands) where complex state and lifecycle methods are required.
-- **React Three Fiber (R3F) & Drei:** Drives the WebGL 3D rendering pipeline, enabling the immersive "Wow Factor" gallery.
-- **Zustand:** Provides highly optimized, flux-like global state management across isolated Astro islands without the overhead of React Context providers wrapping the entire app.
-- **Tailwind CSS 4:** Drives utility-first styling for the HTML fallback layer, ensuring rapid design iteration and minimal CSS bundle sizes.
-- **Web Audio API:** A custom, procedural audio synthesis engine for tactile UI feedback without the massive asset payload overhead of downloading `.mp3` or `.wav` files.
-- **Vitest & React Testing Library:** Powers the rigorous Test-Driven Development (TDD) pipeline, enforcing a strict 100% test coverage requirement.
-
-## 3. Architecture Diagram (Mermaid)
+We utilize a hybrid-rendering approach optimized for spatial computing and edge AI.
 
 ```mermaid
 graph TD
-    %% Core Framework
-    A[Astro Framework] --> |Generates| B[Static HTML Layer Recruiter Mode]
-    A --> |Hydrates| C[React Islands Client-Side]
+    A[Astro 5+ Shell] -->|SSR / Static HTML| B(Glassmorphism UI Fallback)
+    A -->|Client Hydration| C[Zustand Store]
     
-    %% Static Layer
-    B --> B1[RecruiterResume.astro]
-    B1 --> |Reads| B2[(portfolio.config.ts Data Source)]
+    C -->|State Updates| D[DOM Components]
+    C -->|Uniform Updates| E[Canvas Components R3F]
     
-    %% Interactive Layer
-    C --> C1[RecruiterToggle.tsx]
-    C --> C2[Terminal.tsx Simulated AI]
-    C --> C3[Scene.tsx WebGL]
+    D --> F[Terminal / HUD / Loader]
+    E --> G[Three.js WebGPU Renderer]
     
-    %% State & Event Management
-    C1 --> |Mutates| Z[Zustand Store usePortfolioStore]
-    Z --> |Dispatches Event| E[window 'portfolio-state-change']
+    G --> H[Rapier Physics Engine N-Body]
     
-    %% Event Listeners
-    E -.-> |Toggles Visibility & CSS classes| B
-    E -.-> |Unmounts/Remounts Canvas| C3
-    
-    %% WebGL Sub-Systems
-    C3 --> R3F[React Three Fiber / Three.js]
-    C3 --> AU[AudioEngine Web Audio API]
-    C3 --> |Reads| B2
+    I[User Query] -->|POST /api/chat| J[Cloudflare Worker / API Route]
+    J -->|AI Adapter Pattern| K{API Key Exists?}
+    K -->|Cloudflare| L[Vectorize + Workers AI]
+    K -->|Standard ENV| M[Gemini API direct]
 ```
 
-## 4. The "Recruiter Mode" Fallback
-The architecture is inherently defensive. While WebGL is visually stunning, corporate networks or mobile browsers may struggle with performance. 
-By default, the architecture provides a fixed toggle switch. When "Recruiter Mode" is activated:
-1. The Zustand store updates the state.
-2. The `Scene.tsx` canvas completely unmounts, forcing the browser to garbage-collect all Three.js meshes, materials, and geometries.
-3. The DOM instantly reveals `RecruiterResume.astro`, a perfectly semantic, text-selectable HTML layout.
-4. The site achieves a guaranteed **100 Lighthouse Score** for Performance, Accessibility, and SEO.
+## Core Pillars
 
-## 5. Testing Methodology (TDD)
-The architecture strictly enforces Test-Driven Development (TDD). Before any logic or UI is built, the corresponding tests must be written in Vitest.
-- **Unit Tests:** React components (`RecruiterToggle.tsx`) are tested via `@testing-library/react`. We simulate user events (`click`, `hover`) and assert DOM mutations.
-- **State Tests:** Zustand stores are tested by hooking into the store, resetting the state in `beforeEach` hooks, and verifying atomic mutations.
-- **Coverage Policy:** CI/CD pipelines are configured to fail if coverage (Statements, Branches, Functions, Lines) drops below 100%.
+1. **Astro 5+ Hybrid Routing:**
+   - Astro handles the overall document structure. The `/fallback` route provides a perfect, zero-JS HTML/CSS resume for ATS scanners and users with disabled WebGL.
+   - The main `/` route hydrates the React 19 application.
 
-## 6. Config-Driven Pattern
-The UI components are entirely "dumb" rendering engines. They contain zero hardcoded personal information. All personal data, projects, certifications, and theme definitions live inside `src/config/portfolio.config.ts`. This allows the repository to be open-sourced as a template where any developer can fork it, modify the config file, and instantly deploy their own elite portfolio.
+2. **React Three Fiber (v9) & WebGPU:**
+   - R3F manages the 3D scene graph. We strictly decouple the DOM from the Canvas to prevent React reconciliation from dropping frames.
+   - We use the experimental Three.js WebGPU backend and TSL (Three Shading Language) for maximum performance.
+
+3. **Physics (Rapier):**
+   - `@react-three/rapier` governs the N-body gravitational simulation for the Orbital Command paradigm. 
+
+4. **Edge AI Adapter Pattern:**
+   - For elite deployments, Cloudflare Workers handles embeddings and RAG via Vectorize and D1 to achieve sub-50ms TTFT (Time To First Token).
+   - For open-source forkability, an adapter gracefully degrades to calling the Gemini REST API if standard `.env` keys are used instead of Cloudflare bindings.
+
+5. **Test-Driven Development (TDD):**
+   - All core logic, config parsing, and AI endpoints are tested using Vitest before integration into the UI.

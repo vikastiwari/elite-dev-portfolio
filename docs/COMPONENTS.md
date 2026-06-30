@@ -1,53 +1,25 @@
-# Component Dictionary & Lifecycle
+# Component Architecture
 
-A comprehensive breakdown of the core components driving the `elite-dev-portfolio`.
+To maintain 120 FPS, the React component tree is strictly segregated into DOM elements and Canvas elements. 
 
-## 1. Astro Components (Static/Server)
+## `src/components/dom/`
+HTML-based UI overlays that sit on top of the `<Canvas>`.
+- `Loader.tsx`: The cinematic booting sequence using `@react-three/drei`'s `useProgress`.
+- `HUD.tsx`: The heads-up display containing navigation, theme toggles, and the AI Chatbot interface.
+- `Terminal.tsx`: The `xterm.js` implementation for "Hacker Mode".
+- `PerformanceOverlay.tsx`: Displays live FPS and memory metrics (using `r3f-perf`).
 
-### `Layout.astro`
-- **Role:** The global HTML shell and routing wrapper.
-- **Responsibilities:**
-  - Injects critical `<meta>` tags for SEO and responsive viewports.
-  - Imports the global Tailwind CSS stylesheet (`src/styles/global.css`).
-  - Provides the `<slot />` mechanism for child pages.
+## `src/components/canvas/`
+React Three Fiber components executing within the WebGL context.
+- `Scene.tsx`: The master `<Canvas>` provider, initializing lighting, post-processing, and Rapier Physics.
+- `OrbitalSystem.tsx`: Manages the N-body gravitational physics for projects and certifications.
+- `ProjectNode.tsx`: Represents a single project as a celestial body, handling video texture preloading on hover.
+- `TechGraph.tsx`: The 3D force-directed graph visualizing the tech stack.
+- `AdaptivePerformance.tsx`: The Drei `<PerformanceMonitor>` logic that degrades quality to save mobile battery.
 
-### `RecruiterResume.astro`
-- **Role:** The zero-JS fallback layer.
-- **Responsibilities:**
-  - Iterates over the immutable `PORTFOLIO_CONFIG` object during the build step to generate semantic, highly accessible HTML.
-  - Applies Tailwind utility classes to ensure a pristine, print-friendly, ATS-optimized layout.
-  - Remains hidden via CSS until triggered by the Event Bus.
+## `src/api/`
+Serverless endpoints handling backend logic.
+- `chat.ts`: The RAG AI endpoint utilizing the Adapter Pattern for Cloudflare vs Standard API keys.
 
-## 2. React Components (Client/Islands)
-
-### `RecruiterToggle.tsx`
-- **Role:** The primary user control mechanism for the dual-layer architecture.
-- **State:** Reads and mutates `isRecruiterMode` via Zustand.
-- **Effects:** Dispatches `portfolio-state-change` window events on click.
-- **Styling:** Fixed position, high `z-index` to ensure it is always accessible regardless of scroll or 3D camera position.
-
-### `Terminal.tsx`
-- **Role:** A simulated CLI interface overlay designed to highlight AI/Web3 credentials instantly.
-- **State:** Manages internal `typingIndex` and `history` arrays to simulate a live console.
-- **Lifecycle:** 
-  - `useEffect` hooks trigger `setTimeout` loops to simulate character-by-character typing.
-  - Automatically scrolls to the bottom of the container as new lines are added.
-- **Future Integration:** Slated to be connected to a Cloudflare Worker WebSocket for live RAG AI (Phase 6).
-
-### `Scene.tsx` (WebGL Core)
-- **Role:** The core React Three Fiber canvas.
-- **Dependencies:** `@react-three/fiber`, `@react-three/drei`.
-- **Responsibilities:**
-  - Initializes the WebGL context.
-  - Maps over `PORTFOLIO_CONFIG.projects` to render individual `ProjectCard` 3D meshes.
-  - Applies environment maps, ambient lighting, and floating physics (`<Float />`).
-  - Manages `onPointerOver` and `onClick` raycasting events to trigger procedural audio.
-
-## 3. Core Utilities
-
-### `audio.ts`
-- **Role:** A singleton class interacting directly with the browser's `AudioContext`.
-- **Responsibilities:**
-  - Generates procedural sine (`hover`) and square (`click`) waves.
-  - Manages the `AudioContext` state, ensuring it resumes correctly after user interaction to bypass autoplay restrictions.
-  - **Why Procedural?** Eliminates network requests for audio files, keeping the portfolio bundle incredibly small and fast.
+## `src/store/`
+- `useStore.ts`: Zustand store holding global state (active theme, camera position, selected project, AI chat history). Crucial for communicating between `dom/` and `canvas/` without prop drilling.

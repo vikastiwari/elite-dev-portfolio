@@ -173,5 +173,17 @@ export const PORTFOLIO_CONFIG = {
       architectureSummary: "This very website. A config-driven, WebGL-powered portfolio architecture.",
       media: { fallback: "/assets/projects/portfolio.jpg" }
     }
+  ],
+  skills: [
+    { id: "cpp", name: "C++20", category: "Language" },
+    { id: "rust", name: "Rust", category: "Language" },
+    { id: "python", name: "Python", category: "Language" },
+    { id: "java", name: "Java 21/22", category: "Language" },
+    { id: "hft", name: "High-Frequency Trading", category: "Domain" },
+    { id: "zkml", name: "zkML", category: "Domain" },
+    { id: "ai_swarm", name: "AI Swarms", category: "Domain" },
+    { id: "react", name: "React 19", category: "Frontend" },
+    { id: "threejs", name: "WebGPU / Three.js", category: "Frontend" },
+    { id: "astro", name: "Astro", category: "Frontend" }
   ]
 };
