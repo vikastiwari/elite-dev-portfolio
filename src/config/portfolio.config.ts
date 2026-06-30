@@ -6,7 +6,7 @@ export const PORTFOLIO_CONFIG = {
   },
   personalProfile: {
     name: "Vikas Tiwari",
-    titles: ["AI-Augmented Systems Engineer", "Top 1% Competitive Programmer"],
+    titles: ["Senior Full Stack Engineer", "AI-Augmented Systems Architect"],
     contact: {
       github: "https://github.com/vikas-elite",
       linkedin: "https://linkedin.com/in/vikas-elite",
