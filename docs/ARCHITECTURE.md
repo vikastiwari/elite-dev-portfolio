@@ -1,6 +1,6 @@
 # Architectural Blueprint
 
-This document outlines the core architecture for the "God-Tier" WebGL Portfolio, employing an **HFT Orbital Command** paradigm.
+This document outlines the core architecture for the High-Performance WebGL Portfolio, employing an **HFT Orbital Command** paradigm.
 
 ## System Architecture
 
@@ -39,7 +39,7 @@ graph TD
    - `@react-three/rapier` governs the N-body gravitational simulation for the Orbital Command paradigm. 
 
 4. **Edge AI Adapter Pattern:**
-   - For elite deployments, Cloudflare Workers handles embeddings and RAG via Vectorize and D1 to achieve sub-50ms TTFT (Time To First Token).
+   - For production deployments, Cloudflare Workers handles embeddings and RAG via Vectorize and D1 to achieve sub-50ms TTFT (Time To First Token).
    - For open-source forkability, an adapter gracefully degrades to calling the Gemini REST API if standard `.env` keys are used instead of Cloudflare bindings.
 
 5. **Test-Driven Development (TDD):**

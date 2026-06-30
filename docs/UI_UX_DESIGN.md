@@ -19,7 +19,7 @@ Projects and Certifications are not scrolled through. They orbit a central AI si
 - **Clicking** a planet smoothly interpolates the camera (via GSAP) to zoom into the project, revealing video textures and full case studies.
 
 ### 3. Hacker Mode Override (CTRL + ~)
-For absolute tech purists. Hitting `CTRL + ~` shatters the WebGL canvas and drops down a raw, beautifully styled `xterm.js` Linux terminal. Users can navigate the portfolio using pseudo-commands (`cd projects`, `cat resume.md`).
+For technical users. Hitting `CTRL + ~` shatters the WebGL canvas and drops down a raw, beautifully styled `xterm.js` Linux terminal. Users can navigate the portfolio using pseudo-commands (`cd projects`, `cat resume.md`).
 
 ### 4. Dynamic Theme Engine
 4-6 themes (Cyberpunk, Matrix, Deep Space, Synthwave) can be toggled. This state change updates CSS variables on the DOM layer and simultaneously updates Shader Uniforms on the Canvas layer to instantly swap lighting and wireframe colors without a reload.

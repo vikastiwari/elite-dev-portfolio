@@ -1,6 +1,6 @@
 # Detailed Roadmap
 
-The execution of this God-Tier portfolio follows a strict Phased Implementation Plan driven by Test-Driven Development (TDD).
+The execution of this high-performance portfolio follows a strict Phased Implementation Plan driven by Test-Driven Development (TDD).
 
 ## Phase 1: Foundation & TDD (Weeks 1-2)
 - Initialize Astro 5 + React 19 + Tailwind 4 monorepo.

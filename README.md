@@ -1,6 +1,6 @@
-# Elite Developer Portfolio: "God-Tier" Architecture
+# Elite Developer Portfolio: High-Performance Architecture
 
-A bleeding-edge, WebGL-powered spatial portfolio engineered for an AI-Augmented Systems Architect and Top 1% C++ HFT Engineer. 
+An advanced, WebGL-powered spatial portfolio engineered for an AI-Augmented Systems Architect and Top 1% C++ HFT Engineer. 
 
 This is not a standard scrolling website. It is a live, 120 FPS physics simulation that proves elite engineering capability through action, not just words.
 
@@ -10,7 +10,7 @@ We have abandoned the traditional grid layout. This portfolio operates on the **
 - Projects and certifications are celestial bodies orbiting a central singularity, governed by N-body gravitational physics.
 - The UI mimics a futuristic trading terminal crossed with a cyberpunk command center.
 
-## ⚡ Tech Stack (The Absolute Bleeding Edge)
+## ⚡ Tech Stack (Advanced Technologies)
 - **Core Framework:** Astro 5+ (Hybrid Rendering & Zero-JS fallbacks)
 - **Spatial UI:** React 19 + React Three Fiber (v9) + Three.js WebGPU Renderer
 - **Physics Engine:** `@react-three/rapier` (WASM-based Rigid Body Dynamics)
@@ -37,4 +37,4 @@ npm run dev
 ```
 
 ## 📜 Open Source
-This repository is 100% config-driven. By editing the `src/config/portfolio.config.ts` and dropping in your API keys, any developer can fork this and instantly deploy their own God-Tier portfolio.
+This repository is 100% config-driven. By editing the `src/config/portfolio.config.ts` and dropping in your API keys, any developer can fork this and instantly deploy their own high-performance portfolio.

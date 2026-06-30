@@ -1,6 +1,6 @@
 # Known Bugs & Mitigations
 
-As a bleeding-edge WebGL/Edge application, there are specific platform quirks we must actively mitigate.
+As an advanced WebGL/Edge application, there are specific platform quirks we must actively mitigate.
 
 ## 1. Safari 18 View Transitions DOM Detachment
 **Issue:** Safari 18 has a critical bug with the View Transitions API. When swapping the `<body>` tag, Safari briefly detaches elements. If a WebGL `<canvas>` is detached, Safari permanently loses the WebGL context, causing a silent crash.
