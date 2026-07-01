@@ -153,7 +153,7 @@ export const PORTFOLIO_CONFIG = {
       status: "Production",
       techStack: ["React", "Vite", "Zustand", "LangGraph"],
       architectureSummary: "A 'God-Tier' AI Agent Dashboard with interactive LangGraph canvas visualizations.",
-      media: { fallback: "/assets/showcase/icosahedron.webp" }
+      media: { fallback: "/assets/projects/dashboard.jpg" }
     },
     {
       id: "proj_youtube",
