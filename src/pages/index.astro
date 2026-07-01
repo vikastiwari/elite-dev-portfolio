@@ -7,6 +7,7 @@ import AIAvatar from '../components/ui/AIAvatar';
 import HackerTerminal from '../components/terminal/HackerTerminal';
 import KeyboardManager from '../components/KeyboardManager';
 import CinematicLoader from '../components/ui/CinematicLoader';
+import SettingsMenu from '../components/ui/SettingsMenu';
 
 const activeTheme = PORTFOLIO_CONFIG.themeEngine[0].tokens;
 ---
@@ -43,9 +44,9 @@ const activeTheme = PORTFOLIO_CONFIG.themeEngine[0].tokens;
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex items-center justify-between h-20">
               <div class="flex-shrink-0 font-display font-black text-2xl tracking-tighter">
-                  <span class="text-brand-400">&lt;</span>tiwar<span class="text-brand-600">/&gt;</span>
+                  <span class="text-brand-400">&lt;</span>vikas<span class="text-brand-600">/&gt;</span>
               </div>
-              <div class="hidden md:block">
+              <div class="hidden md:flex items-center">
                   <div class="ml-10 flex items-center space-x-8 font-medium">
                       <a href="#about" class="text-slate-300 hover:text-white transition-colors text-sm uppercase tracking-wider relative group">
                           About
@@ -64,6 +65,7 @@ const activeTheme = PORTFOLIO_CONFIG.themeEngine[0].tokens;
                           <span class="relative">Let's Talk</span>
                       </a>
                   </div>
+                  <SettingsMenu client:load />
               </div>
           </div>
       </div>
@@ -262,6 +264,23 @@ const activeTheme = PORTFOLIO_CONFIG.themeEngine[0].tokens;
 </Layout>
 
 <script>
+  import { audioEngine } from '../utils/audioEngine';
+
+  // Global Audio Hooks
+  document.addEventListener('mouseover', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button')) {
+      audioEngine.playHover();
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button')) {
+      audioEngine.playClick();
+    }
+  });
+
   // Scroll Reveal Animation
   const revealElements = document.querySelectorAll('.reveal');
 
