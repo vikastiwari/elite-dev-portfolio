@@ -10,6 +10,7 @@ export default function CertificationRing() {
   const api = useRef<RapierRigidBody[]>(null);
   const themeIndex = useStore((state) => state.themeIndex);
   const theme = PORTFOLIO_CONFIG.themeEngine[themeIndex].tokens;
+  const isLight = theme.background.toLowerCase() === '#ffffff';
 
   const positions = useMemo(() => {
     return Array.from({ length: count }, (_, i) => {
@@ -53,7 +54,11 @@ export default function CertificationRing() {
     >
       <instancedMesh args={[undefined, undefined, count]}>
         <sphereGeometry args={[0.2, 16, 16]} />
-        <meshStandardMaterial color={theme.accent} emissive={theme.accent} emissiveIntensity={0.5} />
+        <meshStandardMaterial 
+          color={isLight ? theme.primary : theme.accent} 
+          emissive={isLight ? theme.primary : theme.accent} 
+          emissiveIntensity={isLight ? 0.2 : 0.5} 
+        />
       </instancedMesh>
     </InstancedRigidBodies>
   );

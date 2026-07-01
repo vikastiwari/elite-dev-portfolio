@@ -14,6 +14,7 @@ export default function ProjectSwarm() {
   const setActiveProject = useStore((state) => state.setActiveProject);
   const themeIndex = useStore((state) => state.themeIndex);
   const theme = PORTFOLIO_CONFIG.themeEngine[themeIndex].tokens;
+  const isLight = theme.background.toLowerCase() === '#ffffff';
 
   const positions = useMemo(() => {
     return Array.from({ length: count }, () => [
@@ -70,7 +71,11 @@ export default function ProjectSwarm() {
         }}
       >
         <sphereGeometry args={[0.5, 32, 32]} />
-        <meshStandardMaterial color={theme.primary} roughness={0.2} metalness={0.8} />
+        <meshStandardMaterial 
+          color={isLight ? '#cbd5e1' : theme.primary} 
+          roughness={isLight ? 0.4 : 0.2} 
+          metalness={isLight ? 0.2 : 0.8} 
+        />
       </instancedMesh>
     </InstancedRigidBodies>
   );
