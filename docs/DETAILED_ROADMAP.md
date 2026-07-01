@@ -46,3 +46,12 @@ The execution of this high-performance portfolio follows a strict Phased Impleme
 ## Phase 8: Future Expansions (Completed)
 - **In-Browser ZK-Proof Vault (Completed):** Implemented a Circom Poseidon-Hash circuit + `snarkjs` for completely client-side recruiter verification without exposing secret codes.
 - **Live GitHub Commits Globe (Completed):** Migrated to the cutting-edge Three.js WebGPU backend, writing native TSL Compute Shaders to animate 1,000,000 parallel particles seamlessly without affecting the main WebGL canvas framerate.
+
+
+---
+## Phase 9 God-Tier Upgrades (Latest Updates)
+- **3D Rigged Abstract Avatar**: Built a robotic digital twin using Three.js primitives (`Box`, `Sphere`). Implemented `Quaternion.slerp` for smooth 3D cursor tracking and Web Audio API integration for dynamic jaw lip-syncing.
+- **WebGPU GitHub Globe Enhancements**: Replaced `PlaneGeometry` with 3D `TetrahedronGeometry` to prevent particles from disappearing during edge-on rotations. Rewrote the TSL compute shader to use an immutable base buffer for flawless, continuous oscillation without math locking.
+- **Dynamic CSS Theme Sync for WebGL**: Implemented a `MutationObserver` inside the WebGPU initialization to dynamically read DOM CSS variables (like `--color-primary`), updating the Globe's color and swapping `AdditiveBlending` for `NormalBlending` in Light Mode to preserve visibility.
+- **Interactive Terminal & Hidden Minigame**: Transformed the Gemini-Lite Terminal into an interactive input CLI. Typing `sudo play` mounts a hidden WebGL Physics Gravity Well Sandbox powered by `@react-three/rapier`, generating 150 blocks magnetically attracted to the user's cursor.
+- **ZK-Vault Refinements**: Fixed JSX ternary logic errors, migrated all hardcoded color classes to CSS theme variables, and added native keyboard `Enter` key support.

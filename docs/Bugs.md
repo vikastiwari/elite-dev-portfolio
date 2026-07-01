@@ -40,3 +40,12 @@ As an advanced WebGL/Edge application, there are specific platform quirks we mus
 ## 9. WebGPU Browser Incompatibility
 **Issue:** TSL Compute Shaders require the WebGPU backend, which is entirely unavailable on older browsers, mobile devices, and unflagged Safari versions. Forcing a WebGPU canvas crashes the layout.
 **Mitigation:** The `GitHubGlobe.tsx` architecture uses a strict `try/catch` block during `new WebGPURenderer()` initialization. If it throws an error, the component gracefully falls back to injecting a styled DOM element with a clear "WebGPU not supported" terminal output, preserving the rest of the site's layout.
+
+
+---
+## Phase 9 God-Tier Upgrades (Latest Updates)
+- **3D Rigged Abstract Avatar**: Built a robotic digital twin using Three.js primitives (`Box`, `Sphere`). Implemented `Quaternion.slerp` for smooth 3D cursor tracking and Web Audio API integration for dynamic jaw lip-syncing.
+- **WebGPU GitHub Globe Enhancements**: Replaced `PlaneGeometry` with 3D `TetrahedronGeometry` to prevent particles from disappearing during edge-on rotations. Rewrote the TSL compute shader to use an immutable base buffer for flawless, continuous oscillation without math locking.
+- **Dynamic CSS Theme Sync for WebGL**: Implemented a `MutationObserver` inside the WebGPU initialization to dynamically read DOM CSS variables (like `--color-primary`), updating the Globe's color and swapping `AdditiveBlending` for `NormalBlending` in Light Mode to preserve visibility.
+- **Interactive Terminal & Hidden Minigame**: Transformed the Gemini-Lite Terminal into an interactive input CLI. Typing `sudo play` mounts a hidden WebGL Physics Gravity Well Sandbox powered by `@react-three/rapier`, generating 150 blocks magnetically attracted to the user's cursor.
+- **ZK-Vault Refinements**: Fixed JSX ternary logic errors, migrated all hardcoded color classes to CSS theme variables, and added native keyboard `Enter` key support.
