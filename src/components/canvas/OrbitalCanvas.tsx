@@ -33,7 +33,7 @@ export default function OrbitalCanvas() {
         <PerformanceManager />
         <CameraController />
         
-        {!isGameActive && <AIAvatarCore />}
+        {/* {!isGameActive && <AIAvatarCore />} */}
 
         <Physics gravity={[0, 0, 0]}>
           {isGameActive ? (

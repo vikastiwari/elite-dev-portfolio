@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { PORTFOLIO_CONFIG } from '../config/portfolio.config';
 import OrbitalCanvas from '../components/canvas/OrbitalCanvas';
 import TechForceGraph from '../components/canvas/TechForceGraph';
-// import AIAvatar from '../components/ui/AIAvatar';
+import AIAvatar from '../components/ui/AIAvatar';
 import HackerTerminal from '../components/terminal/HackerTerminal';
 import KeyboardManager from '../components/KeyboardManager';
 import CinematicLoader from '../components/ui/CinematicLoader';
@@ -68,6 +68,7 @@ if (activeThemeId === 'minimalist') {
   <!-- Phase 3 UI Overlays -->
   <KeyboardManager client:load />
   <HackerTerminal client:only="react" />
+  <AIAvatar client:load />
 
   <!-- WebGL Background and Graph -->
   <OrbitalCanvas client:only="react" />
