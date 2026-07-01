@@ -45,25 +45,32 @@ export default function SettingsMenu() {
     document.documentElement.style.setProperty('--glass-border', isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.05)');
     document.documentElement.style.setProperty('--glass-card-bg', isLight ? 'rgba(255,255,255,0.6)' : 'rgba(17,24,39,0.6)');
 
-    // Dynamic selection and mesh colors for light mode
+    // Dynamic mesh colors
     document.documentElement.style.setProperty('--mesh-color', isLight ? '#94a3b8' : theme.primary);
-    document.documentElement.style.setProperty('--selection-bg', isLight ? '#cbd5e1' : theme.accent);
-    document.documentElement.style.setProperty('--selection-text', isLight ? '#0f172a' : '#ffffff');
 
-    // Compute button colors based on specific themes for better contrast
-    let btnBg, btnText;
+    // Compute button and selection colors based on specific themes for better contrast
+    let btnBg, btnText, selectionBg, selectionText;
     if (PORTFOLIO_CONFIG.themeEngine[nextIndex].id === 'minimalist') {
       btnBg = '#e2e8f0'; // Light grey
       btnText = '#0f172a'; // Dark grey
+      selectionBg = '#cbd5e1';
+      selectionText = '#0f172a';
     } else if (PORTFOLIO_CONFIG.themeEngine[nextIndex].id === 'matrix') {
       btnBg = '#ffffff';
       btnText = '#000000';
+      selectionBg = theme.primary; // Hacker Green
+      selectionText = '#000000'; // Black
     } else {
       btnBg = theme.accent;
       btnText = '#ffffff';
+      selectionBg = theme.accent;
+      selectionText = '#ffffff';
     }
+    
     document.documentElement.style.setProperty('--btn-bg', btnBg);
     document.documentElement.style.setProperty('--btn-text', btnText);
+    document.documentElement.style.setProperty('--selection-bg', selectionBg);
+    document.documentElement.style.setProperty('--selection-text', selectionText);
 
     if (audioEngine.enabled) audioEngine.playHover();
   };
