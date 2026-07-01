@@ -95,9 +95,7 @@ export default function GitHubGlobe() {
       const computeNode = computeParticles().compute(particleCount);
 
       // Geometry and Material
-      // We use a 3D Tetrahedron (4 triangles) instead of a 2D Plane (2 triangles) 
-      // because 2D planes disappear when the InstancedMesh rotates edge-on to the camera!
-      const geometry = new THREE.TetrahedronGeometry(0.015);
+      const geometry = new THREE.PlaneGeometry(0.015, 0.015);
       const material = new MeshBasicNodeMaterial({
         color: 0x00ffcc, // Cyan
         transparent: true,
@@ -117,13 +115,12 @@ export default function GitHubGlobe() {
         const isLight = theme.includes('light');
         
         const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim();
-        const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim();
         if (primaryColor) {
-           material.color.set(isLight ? accentColor : primaryColor);
+           material.color.set(primaryColor);
         }
 
         material.blending = isLight ? THREE.NormalBlending : THREE.AdditiveBlending;
-        material.opacity = isLight ? 1.0 : 0.6;
+        material.opacity = isLight ? 0.9 : 0.6;
         material.needsUpdate = true;
       };
 

@@ -21,6 +21,7 @@ export default function HackerTerminal() {
           background: theme.background,
           foreground: theme.primary,
           cursor: theme.primary,
+          selectionBackground: '#88888880',
         },
         cursorBlink: true,
         fontFamily: 'monospace',
@@ -112,6 +113,7 @@ export default function HackerTerminal() {
         background: theme.background,
         foreground: theme.primary,
         cursor: theme.primary,
+        selectionBackground: '#88888880',
       };
     }
   }, [themeIndex, theme]);

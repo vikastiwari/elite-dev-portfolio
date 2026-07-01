@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { InstancedRigidBodies, RapierRigidBody } from '@react-three/rapier';
+import { InstancedRigidBodies, InstancedRigidBodyApi } from '@react-three/rapier';
 import { Box } from '@react-three/drei';
 import * as THREE from 'three';
 
@@ -8,7 +8,7 @@ const COUNT = 150;
 
 export default function Minigame() {
   const { mouse, viewport } = useThree();
-  const api = useRef<RapierRigidBody[]>(null);
+  const api = useRef<InstancedRigidBodyApi>(null);
   const cursorRef = useRef<THREE.Mesh>(null);
   
   // Random positions for boxes
@@ -30,8 +30,10 @@ export default function Minigame() {
     if (!api.current) return;
     
     // Apply gravity well force towards mouse
-    api.current.forEach((body) => {
-      if (!body) return;
+    for (let i = 0; i < COUNT; i++) {
+      const body = api.current.at(i);
+      if (!body) continue;
+      
       const pos = body.translation();
       const bodyPos = new THREE.Vector3(pos.x, pos.y, pos.z);
       
@@ -39,7 +41,7 @@ export default function Minigame() {
       const dist = dir.length();
       
       // Force calculation
-      if (dist > 0.5) { // Prevent extreme forces at origin
+      if (dist > 0.5) { 
         dir.normalize().multiplyScalar(40 / (dist * dist + 1));
         body.applyImpulse({ x: dir.x, y: dir.y, z: dir.z }, true);
       }
@@ -47,7 +49,7 @@ export default function Minigame() {
       // Linear damping to prevent infinite acceleration
       body.setLinearDamping(2);
       body.setAngularDamping(2);
-    });
+    }
   });
 
   return (
@@ -57,7 +59,7 @@ export default function Minigame() {
         positions={positions as any}
         colliders="cuboid"
       >
-        <instancedMesh args={[undefined, undefined, COUNT]}>
+        <instancedMesh args={[undefined as any, undefined as any, COUNT]}>
           <boxGeometry args={[0.5, 0.5, 0.5]} />
           <meshStandardMaterial color="#00ffcc" roughness={0.1} metalness={0.8} />
         </instancedMesh>
