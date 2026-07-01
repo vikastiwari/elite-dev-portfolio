@@ -43,6 +43,6 @@ The execution of this high-performance portfolio follows a strict Phased Impleme
 - **Dynamic Video Logic:** Create robust mappings for project video WebP/MP4 animations using `ProjectVideoPlayer`.
 - **Content Population:** Final user content rewrite of headers, expertise, and projects.
 
-## Phase 8: Future Expansions (ZK Complete)
+## Phase 8: Future Expansions (Completed)
 - **In-Browser ZK-Proof Vault (Completed):** Implemented a Circom Poseidon-Hash circuit + `snarkjs` for completely client-side recruiter verification without exposing secret codes.
-- **Live GitHub Commits Globe:** Shift to a massively parallel TSL compute shader supporting 1,000,000+ particles and bezier curves.
+- **Live GitHub Commits Globe (Completed):** Migrated to the cutting-edge Three.js WebGPU backend, writing native TSL Compute Shaders to animate 1,000,000 parallel particles seamlessly without affecting the main WebGL canvas framerate.

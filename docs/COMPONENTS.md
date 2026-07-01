@@ -16,6 +16,7 @@ Astro components responsible for the core content layout (Phase 7 Modularization
 - `HeroSection.astro`: Top header and 3D typing card.
 - `ExpertiseSection.astro`: Skills grid.
 - `ExperienceSection.astro`: Certifications loop.
+- `GitHubSection.astro`: Dedicated section housing the isolated WebGPU rendering context.
 - `ProjectsSection.astro`: Project map loop utilizing `ProjectVideoPlayer`.
 - `ContactSection.astro` & `Footer.astro`.
 
@@ -26,6 +27,7 @@ React Three Fiber components executing within the WebGL context.
 - `ProjectNode.tsx`: Represents a single project as a celestial body, handling video texture preloading on hover.
 - `TechGraph.tsx`: The 3D force-directed graph visualizing the tech stack.
 - `AdaptivePerformance.tsx`: The Drei `<PerformanceMonitor>` logic that degrades quality to save mobile battery.
+- `GitHubGlobe.tsx`: A completely isolated vanilla Three.js WebGPU component executing a TSL Compute Shader for 1,000,000 particles.
 
 ## `src/api/`
 Serverless endpoints handling backend logic.

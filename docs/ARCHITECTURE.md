@@ -18,7 +18,11 @@ graph TD
     E --> G[Three.js WebGPU Renderer]
     
     G --> H[Rapier Physics Engine N-Body]
-    G --> H2[TSL WebGPU Compute Shaders]
+    G --> H2[Raw GLSL Shaders]
+    
+    S[GitHub Globe Canvas] --> T[Vanilla WebGPU Renderer]
+    T --> U[TSL Compute Node]
+    U -->|1,000,000 Particles| V[Storage Buffers]
     
     I[User Query] -->|POST /api/chat| J[Cloudflare Worker / API Route]
     J -->|AI Adapter Pattern| K{API Key Exists?}
@@ -43,6 +47,10 @@ graph TD
 
 3. **Physics (Rapier):**
    - `@react-three/rapier` governs the N-body gravitational simulation for the Orbital Command paradigm. 
+
+4. **Isolated WebGPU Context (Phase 8):**
+   - We utilize a bleeding-edge architectural pattern by segregating our canvas elements. The main portfolio operates on robust WebGL2 for physics compatibility. 
+   - A highly isolated `<GitHubGlobe client:only="react" />` component spawns a secondary vanilla `WebGPURenderer` to execute mathematically intense TSL (Three Shading Language) Compute Shaders on 1,000,000 parallel vertices without blocking the main WebGL thread. 
 
 4. **Edge AI Adapter Pattern:**
    - For production deployments, Cloudflare Workers handles embeddings and RAG via Vectorize and D1 to achieve sub-50ms TTFT (Time To First Token).

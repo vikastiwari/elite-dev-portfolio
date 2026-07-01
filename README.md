@@ -19,17 +19,18 @@ We have abandoned the traditional grid layout. This portfolio operates on the **
 - **Testing & CI/CD:** 100% Test-Driven Development (TDD) via Vitest, Playwright E2E automation, and GitHub Actions global edge deployment to Cloudflare Pages.
 
 ## 🛠️ Elite Features
-1. **Zero-Knowledge VIP Vault:** Pure client-side `snarkjs` and Circom cryptography verifies VIP recruiters without sending secret access codes over the network.
-2. **Forkable AI Adapter:** Drop in your `GEMINI_API_KEY` to instantly have your own AI clone powered by RAG over your resume.
-3. **Hacker Mode (CLI):** Press `CTRL + ~` to drop the WebGL and open a fully functional `xterm.js` Linux terminal.
-4. **Dynamic Thermal Throttling:** Built-in `<PerformanceMonitor>` that automatically degrades graphics on mobile to prevent battery drain.
-5. **Cinematic Loading & Themes:** A booting terminal loader, 4-6 instant WebGPU themes, and Web Audio API procedural UI sounds.
+1. **1M Particle WebGPU Globe:** A standalone Three.js WebGPU compute shader processing 1,000,000 parallel particles in pure TSL to visualize global GitHub commits without frame drops.
+2. **Zero-Knowledge VIP Vault:** Pure client-side `snarkjs` and Circom cryptography verifies VIP recruiters without sending secret access codes over the network.
+3. **Forkable AI Adapter:** Drop in your `GEMINI_API_KEY` to instantly have your own AI clone powered by RAG over your resume.
+4. **Hacker Mode (CLI):** Press `CTRL + ~` to drop the WebGL and open a fully functional `xterm.js` Linux terminal.
+5. **Dynamic Thermal Throttling:** Built-in `<PerformanceMonitor>` that automatically degrades graphics on mobile to prevent battery drain.
+6. **Cinematic Loading & Themes:** A booting terminal loader, 4-6 instant WebGPU themes, and Web Audio API procedural UI sounds.
 
 ## 📚 Documentation
 Dive deep into our architecture and development guides to understand how this portfolio was engineered and how you can extend it:
-- [Architecture Blueprint](docs/ARCHITECTURE.md): Core system design, hybrid-rendering, and Edge AI patterns.
+- [Architecture Blueprint](docs/ARCHITECTURE.md): Core system design, hybrid-rendering, WebGPU isolation, and Edge AI patterns.
 - [Component Specifications](docs/COMPONENTS.md): Detailed breakdown of WebGL components and UI integration.
-- [Detailed Roadmap](docs/DETAILED_ROADMAP.md): Our phased approach to building out this God-Tier portfolio.
+- [Detailed Roadmap](docs/DETAILED_ROADMAP.md): Our phased approach to building out this portfolio.
 - [Bug Tracker](docs/Bugs.md): Known issues and high-priority fixes.
 - [Communication Guidelines](docs/COMMUNICATION.md): How the AI agent is instructed to communicate.
 - [Astro Development Guide](docs/ASTRO_GUIDE.md): Basic commands and resources for working with Astro.

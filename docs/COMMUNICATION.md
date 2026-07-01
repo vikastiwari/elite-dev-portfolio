@@ -16,11 +16,11 @@ To solve this, we rely on **Zustand** as a transient state manager.
 3. A `useEffect` in the DOM updates CSS variables for HTML colors.
 4. A subscriber in `Scene.tsx` detects the change and pushes the new hex colors to a WebGPU Shader Uniform, instantly updating the 3D lighting without re-mounting any geometries.
 
-### Example 2: Audio-Reactive TSL Shaders
-1. Web Audio `AnalyserNode` extracts FFT (Fast Fourier Transform) frequency data.
-2. Inside `useFrame` in the `AIAvatarCore`, we query the FFT array.
-3. We *never* set this array to a React state. Instead, we directly mutate the value of a persistent TSL Uniform (`myAudioUniform.value = fftAvg`).
-4. This completely bypasses React reconciliation and directly uploads the new data to the WebGPU compute shader, preventing garbage collection micro-stutters.
+### Example 2: Audio-Reactive & Massive Compute Shaders (TSL)
+1. Whether extracting Web Audio FFT data or animating 1,000,000 particles in the `GitHubGlobe`...
+2. We *never* set this positional/audio data to a React state.
+3. Instead, we directly mutate the persistent TSL Uniform (`myAudioUniform.value = fftAvg`) or use WebGPU Storage Buffers.
+4. This completely bypasses React reconciliation and directly uploads the new data to the WebGPU compute shader, preventing garbage collection micro-stutters and preserving perfect 120 FPS.
 
 ## Client to Edge AI Communication
 - The AI chat interface connects to `/api/chat`.

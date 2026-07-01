@@ -36,3 +36,7 @@ As an advanced WebGL/Edge application, there are specific platform quirks we mus
 ## 8. SnarkJS Vite Build Incompatibility
 **Issue:** `snarkjs` heavily depends on core Node modules and causes deep Vite roll-up crashes if imported directly in a standard React component (`crypto`, `fs`, `os`).
 **Mitigation:** Dynamically load the pre-compiled, browser-safe `snarkjs.min.js` file from the `public/zk` folder via an inline `<script>` tag in the global `Layout.astro` file, completely bypassing Vite compilation.
+
+## 9. WebGPU Browser Incompatibility
+**Issue:** TSL Compute Shaders require the WebGPU backend, which is entirely unavailable on older browsers, mobile devices, and unflagged Safari versions. Forcing a WebGPU canvas crashes the layout.
+**Mitigation:** The `GitHubGlobe.tsx` architecture uses a strict `try/catch` block during `new WebGPURenderer()` initialization. If it throws an error, the component gracefully falls back to injecting a styled DOM element with a clear "WebGPU not supported" terminal output, preserving the rest of the site's layout.
