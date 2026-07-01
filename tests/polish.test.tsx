@@ -68,7 +68,6 @@ describe('Polish Components', () => {
 
 describe('AudioEngine', () => {
   it('initializes AudioContext and plays sounds safely', () => {
-    // Mock AudioContext
     const mockOscillator = {
       type: '',
       frequency: { setValueAtTime: vi.fn(), exponentialRampToValueAtTime: vi.fn() },
@@ -80,6 +79,11 @@ describe('AudioEngine', () => {
       gain: { setValueAtTime: vi.fn(), linearRampToValueAtTime: vi.fn(), exponentialRampToValueAtTime: vi.fn() },
       connect: vi.fn()
     };
+    const mockAnalyser = {
+      fftSize: 0,
+      frequencyBinCount: 128,
+      getByteFrequencyData: vi.fn()
+    };
     
     let time = 100;
     (window as any).AudioContext = class {
@@ -89,6 +93,7 @@ describe('AudioEngine', () => {
       destination = {};
       createOscillator = () => mockOscillator;
       createGain = () => mockGain;
+      createAnalyser = () => mockAnalyser;
     };
 
     audioEngine.init();

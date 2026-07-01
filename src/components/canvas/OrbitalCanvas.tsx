@@ -4,6 +4,7 @@ import { Physics } from '@react-three/rapier';
 import { Stars } from '@react-three/drei';
 import ProjectSwarm from './ProjectSwarm';
 import CertificationRing from './CertificationRing';
+import AIAvatarCore from './AIAvatarCore';
 import CameraController from './CameraController';
 import PerformanceManager from './PerformanceManager';
 import { useStore } from '../../store/useStore';
@@ -30,6 +31,8 @@ export default function OrbitalCanvas() {
         <PerformanceManager />
         <CameraController />
         
+        <AIAvatarCore />
+
         <Physics gravity={[0, 0, 0]}>
           <ProjectSwarm />
           <CertificationRing />

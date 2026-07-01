@@ -20,8 +20,10 @@ vi.mock('@react-three/fiber', () => ({
 }));
 
 vi.mock('@react-three/drei', () => ({
-  Stars: () => <div data-testid="mock-stars" />,
-  PerformanceMonitor: () => <div data-testid="mock-perf-monitor" />
+  Stars: () => <div data-testid="stars" />,
+  Icosahedron: ({ children }: any) => <div data-testid="icosahedron">{children}</div>,
+  PerformanceMonitor: () => <div data-testid="mock-perf-monitor" />,
+  Text: ({ children }: any) => <div data-testid="drei-text">{children}</div>
 }));
 
 vi.mock('@react-three/rapier', () => ({

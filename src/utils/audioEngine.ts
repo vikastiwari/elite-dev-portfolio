@@ -6,12 +6,25 @@ class AudioEngine {
 
   private musicOscillators: OscillatorNode[] = [];
   private musicGain: GainNode | null = null;
+  private masterGain: GainNode | null = null;
+  public analyser: AnalyserNode | null = null;
+  private dataArray: Uint8Array | null = null;
 
   init() {
     if (typeof window !== 'undefined' && !this.ctx) {
       const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
       if (AudioContextClass) {
         this.ctx = new AudioContextClass();
+        
+        this.masterGain = this.ctx.createGain();
+        this.masterGain.connect(this.ctx.destination);
+        
+        this.analyser = this.ctx.createAnalyser();
+        this.analyser.fftSize = 256;
+        this.masterGain.connect(this.analyser);
+        
+        this.dataArray = new Uint8Array(this.analyser.frequencyBinCount);
+        
         this.enabled = true;
       }
     }
@@ -34,7 +47,7 @@ class AudioEngine {
     gain.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.1);
     
     osc.connect(gain);
-    gain.connect(this.ctx.destination);
+    if (this.masterGain) gain.connect(this.masterGain);
     
     osc.start();
     osc.stop(this.ctx.currentTime + 0.1);
@@ -56,7 +69,7 @@ class AudioEngine {
     gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.1);
     
     osc.connect(gain);
-    gain.connect(this.ctx.destination);
+    if (this.masterGain) gain.connect(this.masterGain);
     
     osc.start();
     osc.stop(this.ctx.currentTime + 0.1);
@@ -67,7 +80,7 @@ class AudioEngine {
     this.stopMusic();
 
     this.musicGain = this.ctx.createGain();
-    this.musicGain.connect(this.ctx.destination);
+    if (this.masterGain) this.musicGain.connect(this.masterGain);
     this.musicGain.gain.value = 0.03; // very quiet background
 
     if (type === 'light') {
@@ -121,6 +134,14 @@ class AudioEngine {
       this.musicGain.disconnect();
       this.musicGain = null;
     }
+  }
+
+  getFrequencyData(): Uint8Array | null {
+    if (this.analyser && this.dataArray) {
+      this.analyser.getByteFrequencyData(this.dataArray);
+      return this.dataArray;
+    }
+    return null;
   }
 }
 
