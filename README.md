@@ -24,6 +24,15 @@ We have abandoned the traditional grid layout. This portfolio operates on the **
 3. **Dynamic Thermal Throttling:** Built-in `<PerformanceMonitor>` that automatically degrades graphics on mobile to prevent battery drain.
 4. **Cinematic Loading & Themes:** A booting terminal loader, 4-6 instant WebGPU themes, and Web Audio API procedural UI sounds.
 
+## 📚 Documentation
+Dive deep into our architecture and development guides to understand how this portfolio was engineered and how you can extend it:
+- [Architecture Blueprint](docs/ARCHITECTURE.md): Core system design, hybrid-rendering, and Edge AI patterns.
+- [Component Specifications](docs/COMPONENTS.md): Detailed breakdown of WebGL components and UI integration.
+- [Detailed Roadmap](docs/DETAILED_ROADMAP.md): Our phased approach to building out this God-Tier portfolio.
+- [Bug Tracker](docs/Bugs.md): Known issues and high-priority fixes.
+- [Communication Guidelines](docs/COMMUNICATION.md): How the AI agent is instructed to communicate.
+- [Astro Development Guide](docs/ASTRO_GUIDE.md): Basic commands and resources for working with Astro.
+
 ## 🏃 Getting Started
 ```bash
 # Install dependencies

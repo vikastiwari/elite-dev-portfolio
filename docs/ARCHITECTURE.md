@@ -25,7 +25,8 @@ graph TD
     K -->|Cloudflare| L[Vectorize + Workers AI]
     K -->|Standard ENV| M[Gemini API direct]
     
-    N[Resume Download] -->|Client Side WASM| O[@react-pdf/renderer]
+    N[Resume Download] -->|Client Side WASM| O["@react-pdf/renderer"]
+```
 
 ## Core Pillars
 
