@@ -36,5 +36,18 @@ npm run test
 npm run dev
 ```
 
+## ⚙️ How to Personalize (Make it Yours)
+This portfolio is 100% config-driven. You do not need to hunt through dozens of React components to change your name or projects. Everything is managed from a single central brain.
+
+1. **Update Your Details:**
+   Open `src/config/portfolio.config.ts`. Here you will find the `PORTFOLIO_CONFIG` object. Update the `personalProfile` section with your own Name, Titles, and Social Links.
+2. **Add Your Projects & Certifications:**
+   In the same file, replace the placeholder items in the `projectMatrix` and `certificationGraph` arrays with your own projects and certs. The 3D WebGL engine will automatically render them as celestial bodies!
+3. **Activate the AI Brain:**
+   - Create a `.env` file at the root of the project.
+   - Get a free Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
+   - Add `GEMINI_API_KEY=your_actual_api_key` to the `.env` file.
+   - Your AI Clone (the Hacker Terminal) will automatically read your config file and start answering questions as YOU!
+
 ## 📜 Open Source
 This repository is 100% config-driven. By editing the `src/config/portfolio.config.ts` and dropping in your API keys, any developer can fork this and instantly deploy their own high-performance portfolio.
