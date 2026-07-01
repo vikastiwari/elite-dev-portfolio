@@ -10,7 +10,20 @@ import CinematicLoader from '../components/ui/CinematicLoader';
 import SettingsMenu from '../components/ui/SettingsMenu';
 import DownloadResumeButton from '../components/ui/DownloadResumeButton';
 
+const activeThemeId = PORTFOLIO_CONFIG.themeEngine[0].id;
 const activeTheme = PORTFOLIO_CONFIG.themeEngine[0].tokens;
+
+let btnBgInit, btnTextInit;
+if (activeThemeId === 'minimalist') {
+  btnBgInit = '#e2e8f0'; 
+  btnTextInit = '#0f172a';
+} else if (activeThemeId === 'matrix') {
+  btnBgInit = '#ffffff';
+  btnTextInit = '#000000';
+} else {
+  btnBgInit = activeTheme.accent;
+  btnTextInit = '#ffffff';
+}
 ---
 
 <Layout title={PORTFOLIO_CONFIG.globalMetadata.siteName}>
@@ -19,13 +32,17 @@ const activeTheme = PORTFOLIO_CONFIG.themeEngine[0].tokens;
     bgPrimary: activeTheme.background,
     primary: activeTheme.primary,
     secondary: activeTheme.surface,
-    accent: activeTheme.accent
+    accent: activeTheme.accent,
+    btnBgInit,
+    btnTextInit
   }}>
     :root {
       --bg-primary: var(--bgPrimary);
       --color-primary: var(--primary);
       --color-secondary: var(--secondary);
       --color-accent: var(--accent);
+      --btn-bg: var(--btnBgInit);
+      --btn-text: var(--btnTextInit);
     }
   </style>
 

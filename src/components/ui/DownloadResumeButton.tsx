@@ -35,7 +35,7 @@ export default function DownloadResumeButton() {
     <button
       onClick={handleDownload}
       disabled={isGenerating}
-      className="px-6 py-3 bg-[var(--color-primary)] text-[#000000] font-bold rounded-full font-mono text-sm transition-all shadow-[0_0_20px_var(--color-primary)] opacity-90 hover:opacity-100 hover:scale-105 pointer-events-auto disabled:opacity-50 disabled:cursor-not-allowed border border-[var(--color-primary)]"
+      className="px-6 py-3 bg-btn-bg text-btn-text font-bold rounded-full font-mono text-sm transition-all shadow-[0_0_20px_var(--color-brand-500)] opacity-90 hover:opacity-100 hover:scale-105 pointer-events-auto disabled:opacity-50 disabled:cursor-not-allowed border border-white/10"
       data-testid="download-resume-btn"
     >
       {isGenerating ? (
