@@ -2,12 +2,15 @@ import React, { useEffect, useRef } from 'react';
 import { Terminal } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
 import { useStore } from '../../store/useStore';
+import { PORTFOLIO_CONFIG } from '../../config/portfolio.config';
 import '@xterm/xterm/css/xterm.css';
 
 export default function HackerTerminal() {
   const isHackerMode = useStore(state => state.isHackerMode);
+  const themeIndex = useStore(state => state.themeIndex);
   const terminalRef = useRef<HTMLDivElement>(null);
   const xtermRef = useRef<Terminal | null>(null);
+  const theme = PORTFOLIO_CONFIG.themeEngine[themeIndex].tokens;
 
   useEffect(() => {
     if (!isHackerMode || !terminalRef.current) return;
@@ -15,9 +18,9 @@ export default function HackerTerminal() {
     if (!xtermRef.current) {
       const term = new Terminal({
         theme: {
-          background: 'rgba(0, 0, 0, 0.8)',
-          foreground: '#00ff00',
-          cursor: '#00ff00',
+          background: theme.background,
+          foreground: theme.primary,
+          cursor: theme.primary,
         },
         cursorBlink: true,
         fontFamily: 'monospace',
@@ -85,17 +88,28 @@ export default function HackerTerminal() {
     }
   }, [isHackerMode]);
 
+  // Update xterm theme dynamically
+  useEffect(() => {
+    if (xtermRef.current && xtermRef.current.options) {
+      xtermRef.current.options.theme = {
+        background: theme.background,
+        foreground: theme.primary,
+        cursor: theme.primary,
+      };
+    }
+  }, [themeIndex, theme]);
+
   const toggleHackerMode = useStore(state => state.toggleHackerMode);
 
   if (!isHackerMode) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 h-1/2 z-50 bg-black/90 border-t-2 border-green-500/50 p-4 font-mono shadow-[0_0_50px_rgba(0,255,0,0.1)] backdrop-blur-md" data-testid="hacker-terminal">
+    <div className="fixed inset-x-0 bottom-0 h-1/2 z-50 bg-dark-900 border-t-2 border-brand-500/50 p-4 font-mono shadow-[0_0_50px_var(--color-brand-500)] backdrop-blur-md" data-testid="hacker-terminal">
       <div className="absolute top-2 right-4 flex items-center gap-4 z-[60]">
-        <div className="text-green-500/50 text-xs uppercase tracking-widest">Orbital Command // Terminal</div>
+        <div className="text-brand-500 text-xs uppercase tracking-widest">Orbital Command // Terminal</div>
         <button 
           onClick={() => toggleHackerMode()}
-          className="text-green-500 hover:text-white transition-colors"
+          className="text-brand-500 hover:text-text-primary transition-colors"
           title="Close Terminal"
         >
           <i className="fa-solid fa-xmark"></i>

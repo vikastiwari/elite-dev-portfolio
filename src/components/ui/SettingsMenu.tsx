@@ -45,6 +45,21 @@ export default function SettingsMenu() {
     document.documentElement.style.setProperty('--glass-border', isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.05)');
     document.documentElement.style.setProperty('--glass-card-bg', isLight ? 'rgba(255,255,255,0.6)' : 'rgba(17,24,39,0.6)');
 
+    // Compute button colors based on specific themes for better contrast
+    let btnBg, btnText;
+    if (PORTFOLIO_CONFIG.themeEngine[nextIndex].id === 'minimalist') {
+      btnBg = '#e2e8f0'; // Light grey
+      btnText = '#0f172a'; // Dark grey
+    } else if (PORTFOLIO_CONFIG.themeEngine[nextIndex].id === 'matrix') {
+      btnBg = '#ffffff';
+      btnText = '#000000';
+    } else {
+      btnBg = theme.accent;
+      btnText = '#ffffff';
+    }
+    document.documentElement.style.setProperty('--btn-bg', btnBg);
+    document.documentElement.style.setProperty('--btn-text', btnText);
+
     if (audioEngine.enabled) audioEngine.playHover();
   };
 
