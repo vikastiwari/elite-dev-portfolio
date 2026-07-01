@@ -26,11 +26,13 @@
     "@xterm/addon-fit": "^0.11.0",
     "@xterm/xterm": "^6.0.0",
     "astro": "^7.0.4",
+    "circomlibjs": "^0.1.7",
     "gsap": "^3.15.0",
     "lucide-react": "^1.22.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-force-graph-3d": "^1.29.1",
+    "snarkjs": "^0.7.6",
     "tailwindcss": "^4.3.2",
     "three": "^0.185.0",
     "three-forcegraph": "^1.43.4",
@@ -44,6 +46,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/three": "^0.185.0",
     "@vitest/coverage-v8": "^4.1.9",
+    "circomlib": "^2.0.5",
     "jsdom": "^29.1.1",
     "vitest": "^4.1.9"
   }
