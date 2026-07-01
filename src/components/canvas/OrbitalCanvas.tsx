@@ -7,10 +7,12 @@ import CertificationRing from './CertificationRing';
 import AIAvatarCore from './AIAvatarCore';
 import CameraController from './CameraController';
 import PerformanceManager from './PerformanceManager';
+import Minigame from './Minigame';
 import { useStore } from '../../store/useStore';
 
 export default function OrbitalCanvas() {
   const isFocusMode = useStore((state) => state.isFocusMode);
+  const isGameActive = useStore((state) => state.isGameActive);
 
   return (
     <div 
@@ -31,11 +33,17 @@ export default function OrbitalCanvas() {
         <PerformanceManager />
         <CameraController />
         
-        <AIAvatarCore />
+        {!isGameActive && <AIAvatarCore />}
 
         <Physics gravity={[0, 0, 0]}>
-          <ProjectSwarm />
-          <CertificationRing />
+          {isGameActive ? (
+            <Minigame />
+          ) : (
+            <>
+              <ProjectSwarm />
+              <CertificationRing />
+            </>
+          )}
         </Physics>
       </Canvas>
     </div>

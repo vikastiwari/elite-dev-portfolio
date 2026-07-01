@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Terminal as TerminalIcon } from 'lucide-react';
 import { usePortfolioStore } from '../store/usePortfolioStore';
+import { useStore } from '../store/useStore';
 
 const QA_PAIRS = [
   { q: "What is your latency on the C++ HFT engine?", a: "Sub-microsecond. Built on DPDK and Lock-free SPSC queues." },
@@ -68,6 +69,27 @@ export default function TerminalOverlay() {
           </div>
         ))}
         {isTyping && <div className="text-green-400 animate-pulse">_</div>}
+      </div>
+      
+      <div className="mt-2 border-t border-green-500/30 pt-2 flex items-center shrink-0">
+        <span className="text-green-500 mr-2">{'>'}</span>
+        <input 
+          type="text" 
+          className="flex-1 bg-transparent outline-none text-green-400 placeholder-green-800/50"
+          placeholder="Type 'sudo play'..."
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              const val = e.currentTarget.value.trim().toLowerCase();
+              if (val === 'sudo play' || val === 'play') {
+                useStore.getState().toggleGameMode();
+                setMessages(prev => [...prev, { type: 'q', text: `> ${val}` }, { type: 'a', text: 'Initializing WebGL Physics Sandbox...' }]);
+              } else if (val !== '') {
+                setMessages(prev => [...prev, { type: 'q', text: `> ${val}` }, { type: 'a', text: `Command not found: ${val}` }]);
+              }
+              e.currentTarget.value = '';
+            }
+          }}
+        />
       </div>
     </div>
   );
