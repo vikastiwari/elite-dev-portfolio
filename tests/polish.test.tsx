@@ -81,8 +81,11 @@ describe('AudioEngine', () => {
       connect: vi.fn()
     };
     
+    let time = 100;
     (window as any).AudioContext = class {
-      currentTime = 0;
+      get currentTime() {
+        return time++;
+      }
       destination = {};
       createOscillator = () => mockOscillator;
       createGain = () => mockGain;
