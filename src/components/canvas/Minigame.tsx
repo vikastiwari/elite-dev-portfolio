@@ -4,7 +4,7 @@ import { RigidBody, RapierRigidBody } from '@react-three/rapier';
 import { Box } from '@react-three/drei';
 import * as THREE from 'three';
 
-const COUNT = 150;
+const COUNT = 100;
 
 export default function Minigame() {
   const { mouse, viewport } = useThree();
@@ -19,38 +19,48 @@ export default function Minigame() {
   ]), []);
 
   useFrame(() => {
-    const targetX = (mouse.x * viewport.width) / 2;
-    const targetY = (mouse.y * viewport.height) / 2;
-    const mousePos = new THREE.Vector3(targetX, targetY, 0);
+    try {
+      const targetX = (mouse.x * viewport.width) / 2;
+      const targetY = (mouse.y * viewport.height) / 2;
+      const mousePos = new THREE.Vector3(targetX, targetY, 0);
 
-    if (cursorRef.current) {
-        cursorRef.current.position.copy(mousePos);
-    }
-
-    // Apply gravity well force towards mouse
-    for (let i = 0; i < COUNT; i++) {
-      const body = apiRefs.current[i];
-      if (!body) continue;
-      
-      const pos = body.translation();
-      const bodyPos = new THREE.Vector3(pos.x, pos.y, pos.z);
-      
-      const dir = mousePos.clone().sub(bodyPos);
-      const dist = dir.length();
-      
-      // Force calculation
-      if (dist > 0.5) { 
-        dir.normalize().multiplyScalar(20 / (dist * dist + 1));
-        body.applyImpulse({ x: dir.x, y: dir.y, z: dir.z }, true);
+      if (cursorRef.current) {
+          cursorRef.current.position.copy(mousePos);
       }
-      
-      body.setLinearDamping(2);
-      body.setAngularDamping(2);
+
+      // Apply gravity well force towards mouse
+      for (let i = 0; i < COUNT; i++) {
+        const body = apiRefs.current[i];
+        if (!body) continue;
+        
+        // Wrap in try-catch in case a Rapier API changed or is unavailable
+        try {
+          const pos = body.translation();
+          const bodyPos = new THREE.Vector3(pos.x, pos.y, pos.z);
+          
+          const dir = mousePos.clone().sub(bodyPos);
+          const dist = dir.length();
+          
+          if (dist > 0.5) { 
+            dir.normalize().multiplyScalar(20 / (dist * dist + 1));
+            body.applyImpulse({ x: dir.x, y: dir.y, z: dir.z }, true);
+          }
+          
+          body.setLinearDamping(2);
+          body.setAngularDamping(2);
+        } catch (innerErr) {
+           // Silently continue if physics API fails on an object
+        }
+      }
+    } catch (err) {
+       console.error('Minigame useFrame error', err);
     }
   });
 
   return (
     <group>
+      <ambientLight intensity={1.5} />
+      <directionalLight position={[0, 10, 10]} intensity={2} />
       {positions.map((pos, i) => (
         <RigidBody 
           key={i} 

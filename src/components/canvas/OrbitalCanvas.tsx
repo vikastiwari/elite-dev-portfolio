@@ -33,18 +33,20 @@ export default function OrbitalCanvas() {
         <PerformanceManager />
         <CameraController />
         
-        {/* {!isGameActive && <AIAvatarCore />} */}
+        <React.Suspense fallback={null}>
+          {!isGameActive && <AIAvatarCore />}
 
-        <Physics gravity={[0, 0, 0]}>
-          {isGameActive ? (
-            <Minigame />
-          ) : (
-            <>
-              <ProjectSwarm />
-              <CertificationRing />
-            </>
-          )}
-        </Physics>
+          <Physics gravity={[0, 0, 0]}>
+            {isGameActive ? (
+              <Minigame />
+            ) : (
+              <>
+                <ProjectSwarm />
+                <CertificationRing />
+              </>
+            )}
+          </Physics>
+        </React.Suspense>
       </Canvas>
     </div>
   );
