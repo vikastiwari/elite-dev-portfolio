@@ -1,94 +1,76 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 import { audioEngine } from '../../utils/audioEngine';
 import { useStore } from '../../store/useStore';
 
-// We use a standard Ready Player Me public avatar ID for the "Real 3D Avatar". 
-// You can replace this URL with your own custom RPM avatar URL in the future.
-const AVATAR_URL = 'https://models.readyplayer.me/64bfa15f0e72c63d7c393481.glb?morphTargets=ARKit,Oculus+Visemes';
-
 export default function AIAvatarCore() {
   const group = useRef<THREE.Group>(null);
-  const { scene, nodes } = useGLTF(AVATAR_URL) as any;
+  // Reverted to DamagedHelmet as the reliable local asset
+  const { scene } = useGLTF('/DamagedHelmet.glb') as any;
   const { mouse } = useThree();
   const toggleHackerMode = useStore(state => state.toggleHackerMode);
 
-  // Fallback state if the RPM model structure is unexpected
-  const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    if (nodes && nodes.Wolf3D_Head && nodes.Wolf3D_Teeth) {
-      setIsReady(true);
-    }
-  }, [nodes]);
-
-  useFrame(() => {
-    if (!group.current || !isReady) return;
-
-    // 1. Cursor Tracking (Head/Neck Bones)
-    const neck = nodes.Neck;
-    const head = nodes.Head;
-    
-    if (neck && head) {
-      // Map mouse coordinates to rotation angles (limited range)
-      const targetX = -mouse.y * 0.5;
-      const targetY = mouse.x * 0.8;
-      
-      neck.rotation.x = THREE.MathUtils.lerp(neck.rotation.x, targetX * 0.5, 0.1);
-      neck.rotation.y = THREE.MathUtils.lerp(neck.rotation.y, targetY * 0.5, 0.1);
-      
-      head.rotation.x = THREE.MathUtils.lerp(head.rotation.x, targetX * 0.5, 0.1);
-      head.rotation.y = THREE.MathUtils.lerp(head.rotation.y, targetY * 0.5, 0.1);
-    }
-
-    // 2. Audio-Reactive Lip Sync (Visemes)
-    const freqData = audioEngine.getFrequencyData();
-    if (freqData) {
-      let sum = 0;
-      // Focus on lower vocal frequencies for mouth movement
-      const limit = Math.min(20, freqData.length);
-      for (let i = 0; i < limit; i++) {
-        sum += freqData[i];
-      }
-      const avg = sum / limit;
-      // Normalize to 0-1 range for morph target influence
-      const audioForce = Math.min(1.0, avg / 128.0);
-      
-      const headMesh = nodes.Wolf3D_Head;
-      const teethMesh = nodes.Wolf3D_Teeth;
-
-      if (headMesh && headMesh.morphTargetDictionary && headMesh.morphTargetInfluences) {
-        // Map audio force to the 'mouthOpen' or 'viseme_O' morph target
-        const mouthOpenIndex = headMesh.morphTargetDictionary['mouthOpen'] || headMesh.morphTargetDictionary['viseme_O'];
-        if (mouthOpenIndex !== undefined) {
-          headMesh.morphTargetInfluences[mouthOpenIndex] = THREE.MathUtils.lerp(
-            headMesh.morphTargetInfluences[mouthOpenIndex], 
-            audioForce, 
-            0.3
-          );
+  // Extract materials that have emissive properties to pulse them
+  const emissiveMaterials = useMemo(() => {
+    const materials: THREE.MeshStandardMaterial[] = [];
+    scene.traverse((child: any) => {
+      if (child.isMesh && child.material) {
+        // Clone material so we don't mutate the cached GLTF globally
+        child.material = child.material.clone();
+        if (child.material.emissive) {
+          materials.push(child.material);
         }
       }
+    });
+    return materials;
+  }, [scene]);
+
+  useFrame((state) => {
+    if (group.current) {
+      const time = state.clock.elapsedTime;
+
+      // 1. Digital Twin Cursor Tracking (Helmet tracks mouse)
+      const targetX = mouse.x * 1.2;
+      const targetY = mouse.y * 1.2;
+      group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetX, 0.1);
+      group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, -targetY, 0.1);
       
-      if (teethMesh && teethMesh.morphTargetDictionary && teethMesh.morphTargetInfluences) {
-        const mouthOpenIndexTeeth = teethMesh.morphTargetDictionary['mouthOpen'] || teethMesh.morphTargetDictionary['viseme_O'];
-        if (mouthOpenIndexTeeth !== undefined) {
-          teethMesh.morphTargetInfluences[mouthOpenIndexTeeth] = THREE.MathUtils.lerp(
-            teethMesh.morphTargetInfluences[mouthOpenIndexTeeth], 
-            audioForce, 
-            0.3
-          );
+      // Add a subtle floating animation (Google AI style)
+      group.current.position.y = Math.sin(time * 2) * 0.1;
+
+      // 2. Audio-Reactive "Glowing Core"
+      const freqData = audioEngine.getFrequencyData();
+      let audioForce = 0;
+      
+      if (freqData) {
+        let sum = 0;
+        const limit = Math.min(20, freqData.length);
+        for (let i = 0; i < limit; i++) {
+          sum += freqData[i];
         }
+        const avg = sum / limit;
+        audioForce = avg / 255.0; // 0 to 1
       }
+
+      // Pulse the scale slightly
+      const targetScale = 2.0 + (audioForce * 0.4);
+      group.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.2);
+
+      // Pulse the emissive glowing lights (Eyes/Core) on the helmet
+      const emissiveIntensity = 1 + (audioForce * 10.0); // massive glow when speaking
+      emissiveMaterials.forEach(mat => {
+        mat.emissiveIntensity = THREE.MathUtils.lerp(mat.emissiveIntensity, emissiveIntensity, 0.2);
+      });
     }
   });
 
   return (
     <group 
       ref={group} 
-      position={[0, -1.5, 2]} // Lowered slightly so the torso is visible
-      scale={2.5}
+      position={[0, 0, 0]} 
+      scale={2.0}
       data-testid="ai-avatar-core"
       onClick={(e) => {
         e.stopPropagation();
@@ -107,4 +89,4 @@ export default function AIAvatarCore() {
   );
 }
 
-useGLTF.preload(AVATAR_URL);
+useGLTF.preload('/DamagedHelmet.glb');
