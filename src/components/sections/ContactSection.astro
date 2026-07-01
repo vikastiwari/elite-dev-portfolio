@@ -1,0 +1,25 @@
+---
+import { PORTFOLIO_CONFIG } from '../../config/portfolio.config';
+---
+
+<section id="contact" class="py-32 relative z-10 border-t border-t-[var(--glass-border)] mt-10">
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-brand-900/20 -z-10"></div>
+    <div class="max-w-4xl mx-auto px-4 text-center reveal">
+        <h2 class="font-display text-5xl md:text-7xl font-black mb-8 tracking-tight">Let's <span class="text-gradient">Collaborate</span></h2>
+        <p class="text-xl text-slate-400 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+            I'm actively looking for new opportunities. If you have an exciting project or want to build something incredible, my inbox is always open.
+        </p>
+        <a href={`mailto:${PORTFOLIO_CONFIG.personalProfile.contact.email}`} class="relative inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-btn-text transition-all duration-200 bg-btn-bg rounded-full hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 hover:scale-105 hover:shadow-[0_0_40px_var(--color-brand-500)] group">
+            <i class="fa-regular fa-envelope mr-3 text-xl group-hover:animate-bounce"></i> Say Hello
+        </a>
+
+        <div class="mt-20 flex justify-center gap-8">
+            <a href={PORTFOLIO_CONFIG.personalProfile.contact.github} target="_blank" class="w-12 h-12 rounded-full glass flex items-center justify-center text-slate-400 hover:text-white hover:border-brand-400 hover:bg-brand-500/20 transition-all hover:-translate-y-1">
+                <i class="fa-brands fa-github text-xl"></i>
+            </a>
+            <a href={PORTFOLIO_CONFIG.personalProfile.contact.linkedin} target="_blank" class="w-12 h-12 rounded-full glass flex items-center justify-center text-slate-400 hover:text-white hover:border-brand-400 hover:bg-brand-500/20 transition-all hover:-translate-y-1">
+                <i class="fa-brands fa-linkedin-in text-xl"></i>
+            </a>
+        </div>
+    </div>
+</section>

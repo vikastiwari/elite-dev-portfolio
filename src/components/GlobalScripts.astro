@@ -1,0 +1,42 @@
+---
+---
+
+<script>
+  import { audioEngine } from '../utils/audioEngine';
+
+  // Global Audio Hooks
+  document.addEventListener('mouseover', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button')) {
+      audioEngine.playHover();
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button')) {
+      audioEngine.playClick();
+    }
+  });
+
+  // Scroll Reveal Animation
+  const revealElements = document.querySelectorAll('.reveal');
+
+  const revealCallback = (entries: any, observer: any) => {
+      entries.forEach((entry: any) => {
+          if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+              observer.unobserve(entry.target);
+          }
+      });
+  };
+
+  const revealOptions = {
+      threshold: 0.15,
+      rootMargin: "0px 0px -50px 0px"
+  };
+
+  const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+
+  revealElements.forEach(el => revealObserver.observe(el));
+</script>

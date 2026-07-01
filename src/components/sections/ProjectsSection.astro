@@ -1,0 +1,55 @@
+---
+import { PORTFOLIO_CONFIG } from '../../config/portfolio.config';
+import ProjectVideoPlayer from '../ui/ProjectVideoPlayer';
+---
+
+<section id="projects" class="py-24 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal">
+            <div>
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-4">Selected <span class="text-brand-500">Works</span></h2>
+                <div class="h-1 w-20 bg-brand-500 rounded-full mb-2"></div>
+            </div>
+            <a href={PORTFOLIO_CONFIG.personalProfile.contact.github} target="_blank" class="text-brand-400 hover:text-white transition-colors mt-4 md:mt-0 font-medium flex items-center gap-2">
+                View full archive <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="space-y-24">
+            {PORTFOLIO_CONFIG.projectMatrix.map((proj, index) => (
+                <div class={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-12 items-center reveal`}>
+                    <div class="lg:w-7/12 relative group w-full">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-brand-500 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                        <div class="relative rounded-2xl overflow-hidden aspect-video border border-white/10 bg-dark-800 flex items-center justify-center group/player">
+                            {proj.media && proj.media.fallback && proj.media.fallback.includes('webp') ? (
+                                <ProjectVideoPlayer client:visible mediaSrc={proj.media.fallback} title={proj.title} />
+                            ) : proj.media && proj.media.fallback && !proj.media.fallback.includes('jpg') ? (
+                                <img src={proj.media.fallback} alt={proj.title} class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500" loading="lazy" />
+                            ) : (
+                                <span class="text-brand-400 opacity-50 text-2xl font-display font-bold">&lt;{proj.title} /&gt;</span>
+                            )}
+                            {!(proj.media && proj.media.fallback && proj.media.fallback.includes('webp')) && (
+                              <div class="absolute inset-0 bg-dark-900/40 group-hover:bg-transparent transition-colors duration-500 pointer-events-none"></div>
+                            )}
+                        </div>
+                    </div>
+                    <div class={`lg:w-5/12 ${index % 2 === 0 ? 'lg:pl-8' : 'lg:pr-8 lg:items-end lg:text-right'} flex flex-col justify-center`}>
+                        <div class="text-brand-400 font-mono text-sm mb-3 font-semibold">0{index + 1} / {proj.status}</div>
+                        <h3 class="font-display text-3xl font-bold mb-6">{proj.title}</h3>
+                        <div class="glass p-6 rounded-xl mb-6 shadow-xl relative z-10">
+                            <p class="text-slate-300 text-sm leading-relaxed">{proj.architectureSummary}</p>
+                        </div>
+                        <ul class={`flex flex-wrap ${index % 2 === 0 ? '' : 'lg:justify-end'} gap-3 mb-8 font-mono text-xs text-slate-400`}>
+                            {proj.techStack.map(tech => (
+                                <li class="glass px-3 py-1 rounded-full">{tech}</li>
+                            ))}
+                        </ul>
+                        <div class="flex gap-4">
+                            <a href={PORTFOLIO_CONFIG.personalProfile.contact.github} class="hover:text-brand-400 transition-colors font-medium"><i class="fa-brands fa-github mr-2"></i>Source</a>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>

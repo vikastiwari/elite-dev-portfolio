@@ -1,0 +1,48 @@
+---
+import SettingsMenu from '../ui/SettingsMenu';
+---
+
+<nav class="fixed w-full z-50 top-0 transition-all duration-300 glass border-b-0" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+            <div class="flex-shrink-0 font-display font-black text-2xl tracking-tighter">
+                <span class="text-brand-400">&lt;</span>vikas<span class="text-brand-600">/&gt;</span>
+            </div>
+            <div class="hidden md:flex items-center">
+                <div class="ml-10 flex items-center space-x-8 font-medium">
+                    <a href="#about" class="text-slate-300 hover:text-white transition-colors text-sm uppercase tracking-wider relative group">
+                        About
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-400 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#experience" class="text-slate-300 hover:text-white transition-colors text-sm uppercase tracking-wider relative group">
+                        Experience
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-500 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#projects" class="text-slate-300 hover:text-white transition-colors text-sm uppercase tracking-wider relative group">
+                        Projects
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-600 transition-all group-hover:w-full"></span>
+                    </a>
+                    <a href="#contact" class="relative inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold text-btn-text transition-all duration-200 bg-btn-bg rounded-full hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 hover:shadow-[0_0_20px_var(--color-brand-500)] overflow-hidden group">
+                        <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
+                        <span class="relative">Let's Talk</span>
+                    </a>
+                </div>
+                <SettingsMenu client:load />
+            </div>
+        </div>
+    </div>
+</nav>
+
+<script>
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+      if (window.scrollY > 50 && navbar) {
+          navbar.classList.add('bg-dark-900/80', 'backdrop-blur-lg', 'border-b', 'border-white/10');
+          navbar.classList.remove('glass', 'border-b-0');
+      } else if (navbar) {
+          navbar.classList.remove('bg-dark-900/80', 'backdrop-blur-lg', 'border-b', 'border-white/10');
+          navbar.classList.add('glass', 'border-b-0');
+      }
+  });
+</script>
