@@ -9,6 +9,15 @@ HTML-based UI overlays that sit on top of the `<Canvas>`.
 - `Terminal.tsx`: The `xterm.js` implementation for "Hacker Mode".
 - `PerformanceOverlay.tsx`: Displays live FPS and memory metrics (using `r3f-perf`).
 
+## `src/components/sections/`
+Astro components responsible for the core content layout (Phase 7 Modularization).
+- `Navigation.astro`: Main navbar.
+- `HeroSection.astro`: Top header and 3D typing card.
+- `ExpertiseSection.astro`: Skills grid.
+- `ExperienceSection.astro`: Certifications loop.
+- `ProjectsSection.astro`: Project map loop utilizing `ProjectVideoPlayer`.
+- `ContactSection.astro` & `Footer.astro`.
+
 ## `src/components/canvas/`
 React Three Fiber components executing within the WebGL context.
 - `Scene.tsx`: The master `<Canvas>` provider, initializing lighting, post-processing, and Rapier Physics.

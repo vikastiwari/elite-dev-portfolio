@@ -24,3 +24,7 @@ As an advanced WebGL/Edge application, there are specific platform quirks we mus
 ## 5. Background WebGPU Battery Drain
 **Issue:** Hiding the R3F `<Canvas>` using CSS (e.g., `opacity: 0`) during Focus Mode still allows the `requestAnimationFrame` loop to fire at 120 FPS, silently draining the user's battery.
 **Mitigation:** We utilize R3F's `frameloop` prop bound to a Zustand state. When Focus Mode is active, `frameloop="never"` completely pauses WebGPU execution without destroying the VRAM context, guaranteeing 0% GPU usage.
+
+## 6. Project Animation Clipping
+**Issue:** When displaying 3D animations (like the TorusKnot) in the Project cards, the left side of the animation was clipping.
+**Mitigation:** This was a CSS object-fit issue. Switched the video/image tag property from `object-cover` to `object-contain` in the custom `ProjectVideoPlayer.tsx` to ensure the entire WebP/MP4 frame remains visible within the boundary.

@@ -11,10 +11,10 @@ graph TD
     A[Astro 5+ Shell] -->|SSR / Static HTML| B(Glassmorphism UI Fallback)
     A -->|Client Hydration| C[Zustand Store]
     
-    C -->|State Updates| D[DOM Components]
+    C -->|State Updates| D[DOM Components & Sections]
     C -->|Uniform Updates| E[Canvas Components R3F]
     
-    D --> F[Terminal / HUD / Loader]
+    D --> F[Terminal / Loader / Section Modules / ProjectVideoPlayer]
     E --> G[Three.js WebGPU Renderer]
     
     G --> H[Rapier Physics Engine N-Body]
@@ -49,6 +49,9 @@ graph TD
    - **TSL WebGPU Shaders:** We explicitly avoid R3F main-thread bottlenecks by utilizing Three Shading Language (TSL) uniforms modified inside `useFrame` for Audio-Reactive WebGPU physics.
    - **Client-Side WASM PDFs:** We utilize `@react-pdf/renderer` for zero-latency, edge-free PDF generation.
    - **Focus Mode Frameloop Control:** The WebGPU canvas gracefully suspends via `frameloop="never"` bound to Zustand, preventing background battery drain.
+
+7. **Component Modularity (Phase 7):**
+   - We strictly adhere to single-responsibility files inside `src/components/sections/` for layout orchestration, ensuring ease of customization and maintaining SSR performance.
 
 6. **Test-Driven Development (TDD):**
    - All core logic, config parsing, and AI endpoints are tested using Vitest before integration into the UI.

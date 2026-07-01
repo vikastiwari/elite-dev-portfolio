@@ -48,11 +48,13 @@ npm run dev
 ## ⚙️ How to Personalize (Make it Yours)
 This portfolio is 100% config-driven. You do not need to hunt through dozens of React components to change your name or projects. Everything is managed from a single central brain.
 
-1. **Update Your Details:**
+1. **Update Your Core Details:**
    Open `src/config/portfolio.config.ts`. Here you will find the `PORTFOLIO_CONFIG` object. Update the `personalProfile` section with your own Name, Titles, and Social Links.
-2. **Add Your Projects & Certifications:**
-   In the same file, replace the placeholder items in the `projectMatrix` and `certificationGraph` arrays with your own projects and certs. The 3D WebGL engine will automatically render them as celestial bodies!
-3. **Activate the AI Brain:**
+2. **Update Layout and Hardcoded Text:**
+   We recently modularized the architecture! If you want to change the massive headlines (e.g., "Crafting Digital Reality") or section descriptions, open the files inside the `src/components/sections/` directory (e.g., `HeroSection.astro`, `ExpertiseSection.astro`). This makes updating text highly intuitive.
+3. **Add Your Projects & Certifications:**
+   In `portfolio.config.ts`, replace the placeholder items in the `projectMatrix` array. To add a live video or WebP animation to your project, simply drop the file into `public/assets/projects/` and update the `media.fallback` string in the config. The custom `ProjectVideoPlayer` component handles the rest.
+4. **Activate the AI Brain:**
    - Create a `.env` file at the root of the project.
    - Get a free Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
    - Add `GEMINI_API_KEY=your_actual_api_key` to the `.env` file.
