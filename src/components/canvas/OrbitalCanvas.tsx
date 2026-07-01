@@ -6,11 +6,18 @@ import ProjectSwarm from './ProjectSwarm';
 import CertificationRing from './CertificationRing';
 import CameraController from './CameraController';
 import PerformanceManager from './PerformanceManager';
+import { useStore } from '../../store/useStore';
 
 export default function OrbitalCanvas() {
+  const isFocusMode = useStore((state) => state.isFocusMode);
+
   return (
-    <div className="fixed inset-0 z-0 bg-transparent pointer-events-none" data-testid="orbital-canvas">
+    <div 
+      className={`fixed inset-0 z-0 pointer-events-none transition-opacity duration-700 ease-in-out ${isFocusMode ? 'opacity-0' : 'opacity-100 bg-transparent'}`} 
+      data-testid="orbital-canvas"
+    >
       <Canvas
+        frameloop={isFocusMode ? 'never' : 'always'}
         style={{ pointerEvents: 'auto' }}
         camera={{ position: [0, 0, 15], fov: 45 }}
         gl={{ antialias: false, powerPreference: 'high-performance', alpha: true }}

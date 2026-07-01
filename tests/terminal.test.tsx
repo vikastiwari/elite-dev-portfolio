@@ -16,7 +16,9 @@ vi.mock('@xterm/xterm', () => {
       open() {}
       writeln() {}
       write() {}
+      dispose() {}
       onData(cb: any) { xtermCb = cb; }
+      attachCustomKeyEventHandler() {}
       clear() {}
     }
   };

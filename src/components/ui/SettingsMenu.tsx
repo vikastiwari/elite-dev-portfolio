@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { PORTFOLIO_CONFIG } from '../../config/portfolio.config';
 import { audioEngine } from '../../utils/audioEngine';
 import { useStore } from '../../store/useStore';
+import FocusModeToggle from './FocusModeToggle';
 
 export default function SettingsMenu() {
   const [soundEnabled, setSoundEnabled] = useState(false);
@@ -95,7 +96,8 @@ export default function SettingsMenu() {
   };
 
   return (
-    <div className="flex items-center gap-2 ml-8 border-l border-l-[var(--glass-border)] pl-8">
+    <div className="flex items-center gap-2 ml-8 border-l border-l-[var(--glass-border)] pl-8 pointer-events-auto">
+      <FocusModeToggle />
       <button 
         onClick={cycleTheme}
         className="text-text-muted hover:text-brand-400 transition-colors w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--glass-border)]"
