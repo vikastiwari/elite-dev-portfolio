@@ -71,10 +71,14 @@ export default function ProjectSwarm() {
         }}
       >
         <sphereGeometry args={[0.5, 32, 32]} />
-        <meshStandardMaterial 
-          color={isLight ? '#cbd5e1' : theme.primary} 
-          roughness={isLight ? 0.4 : 0.2} 
-          metalness={isLight ? 0.2 : 0.8} 
+        <meshPhysicalMaterial 
+          color={isLight ? theme.primary : theme.primary} 
+          emissive={isLight ? theme.primary : '#000000'}
+          emissiveIntensity={isLight ? 0.6 : 0}
+          roughness={isLight ? 0.2 : 0.2} 
+          metalness={isLight ? 0.1 : 0.8} 
+          clearcoat={isLight ? 1.0 : 0.0}
+          clearcoatRoughness={0.1}
         />
       </instancedMesh>
     </InstancedRigidBodies>

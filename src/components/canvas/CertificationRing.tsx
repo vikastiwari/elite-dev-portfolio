@@ -54,10 +54,12 @@ export default function CertificationRing() {
     >
       <instancedMesh args={[undefined, undefined, count]}>
         <sphereGeometry args={[0.2, 16, 16]} />
-        <meshStandardMaterial 
+        <meshPhysicalMaterial 
           color={isLight ? theme.primary : theme.accent} 
           emissive={isLight ? theme.primary : theme.accent} 
-          emissiveIntensity={isLight ? 0.2 : 0.5} 
+          emissiveIntensity={isLight ? 0.8 : 0.5} 
+          clearcoat={isLight ? 1.0 : 0.0}
+          clearcoatRoughness={0.1}
         />
       </instancedMesh>
     </InstancedRigidBodies>
