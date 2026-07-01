@@ -12,6 +12,8 @@ export default function ProjectSwarm() {
   const count = projects.length;
   const api = useRef<RapierRigidBody[]>(null);
   const setActiveProject = useStore((state) => state.setActiveProject);
+  const themeIndex = useStore((state) => state.themeIndex);
+  const theme = PORTFOLIO_CONFIG.themeEngine[themeIndex].tokens;
 
   const positions = useMemo(() => {
     return Array.from({ length: count }, () => [
@@ -68,7 +70,7 @@ export default function ProjectSwarm() {
         }}
       >
         <sphereGeometry args={[0.5, 32, 32]} />
-        <meshStandardMaterial color="#00ff9f" roughness={0.2} metalness={0.8} />
+        <meshStandardMaterial color={theme.primary} roughness={0.2} metalness={0.8} />
       </instancedMesh>
     </InstancedRigidBodies>
   );

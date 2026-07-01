@@ -9,12 +9,12 @@ import PerformanceManager from './PerformanceManager';
 
 export default function OrbitalCanvas() {
   return (
-    <div className="fixed inset-0 z-0 bg-slate-950" data-testid="orbital-canvas">
+    <div className="fixed inset-0 z-0 bg-transparent pointer-events-none" data-testid="orbital-canvas">
       <Canvas
+        style={{ pointerEvents: 'auto' }}
         camera={{ position: [0, 0, 15], fov: 45 }}
-        gl={{ antialias: false, powerPreference: 'high-performance' }}
+        gl={{ antialias: false, powerPreference: 'high-performance', alpha: true }}
       >
-        <color attach="background" args={['#050510']} />
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} intensity={1} />
         

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { PORTFOLIO_CONFIG } from '../../config/portfolio.config';
 import { audioEngine } from '../../utils/audioEngine';
+import { useStore } from '../../store/useStore';
 
 export default function SettingsMenu() {
   const [soundEnabled, setSoundEnabled] = useState(false);
-  const [currentThemeIndex, setCurrentThemeIndex] = useState(0);
+  const themeIndex = useStore(state => state.themeIndex);
+  const setThemeIndex = useStore(state => state.setThemeIndex);
   const [musicTrack, setMusicTrack] = useState<'off' | 'light' | 'intense'>('off');
 
   useEffect(() => {
@@ -25,8 +27,8 @@ export default function SettingsMenu() {
   };
 
   const cycleTheme = () => {
-    const nextIndex = (currentThemeIndex + 1) % PORTFOLIO_CONFIG.themeEngine.length;
-    setCurrentThemeIndex(nextIndex);
+    const nextIndex = (themeIndex + 1) % PORTFOLIO_CONFIG.themeEngine.length;
+    setThemeIndex(nextIndex);
     const theme = PORTFOLIO_CONFIG.themeEngine[nextIndex].tokens;
     
     document.documentElement.style.setProperty('--bg-primary', theme.background);
@@ -61,7 +63,7 @@ export default function SettingsMenu() {
       <button 
         onClick={cycleTheme}
         className="text-slate-400 hover:text-brand-400 transition-colors w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/5"
-        title={`Theme: ${PORTFOLIO_CONFIG.themeEngine[currentThemeIndex].name}`}
+        title={`Theme: ${PORTFOLIO_CONFIG.themeEngine[themeIndex].name}`}
       >
         <i className="fa-solid fa-palette text-lg"></i>
       </button>

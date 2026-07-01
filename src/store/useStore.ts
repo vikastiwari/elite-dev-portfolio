@@ -1,22 +1,22 @@
 import { create } from 'zustand';
 
 interface PortfolioState {
-  theme: string;
+  themeIndex: number;
   isLoaderDismissed: boolean;
   activeProject: string | null;
   isHackerMode: boolean;
-  setTheme: (theme: string) => void;
+  setThemeIndex: (index: number) => void;
   dismissLoader: () => void;
   setActiveProject: (projectId: string | null) => void;
   toggleHackerMode: () => void;
 }
 
 export const useStore = create<PortfolioState>((set) => ({
-  theme: 'cyberpunk', // default theme
+  themeIndex: 0,
   isLoaderDismissed: false,
   activeProject: null,
   isHackerMode: false,
-  setTheme: (theme) => set({ theme }),
+  setThemeIndex: (index) => set({ themeIndex: index }),
   dismissLoader: () => set({ isLoaderDismissed: true }),
   setActiveProject: (projectId) => set({ activeProject: projectId }),
   toggleHackerMode: () => set((state) => ({ isHackerMode: !state.isHackerMode })),

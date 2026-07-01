@@ -146,7 +146,7 @@
   width: 50vw;
   height: 50vw;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(3, 7, 18, 0) 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-brand-400) 15%, transparent) 0%, transparent 70%);
 }
 
 .mesh-blob-2 {
@@ -156,7 +156,7 @@
   width: 60vw;
   height: 60vw;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(3, 7, 18, 0) 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-brand-600) 15%, transparent) 0%, transparent 70%);
 }
 
 .mesh-blob-3 {
@@ -167,5 +167,5 @@
   width: 40vw;
   height: 40vw;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, rgba(3, 7, 18, 0) 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-brand-700) 10%, transparent) 0%, transparent 70%);
 }

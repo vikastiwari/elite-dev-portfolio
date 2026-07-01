@@ -2,11 +2,14 @@ import React, { useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { InstancedRigidBodies, RapierRigidBody } from '@react-three/rapier';
 import { PORTFOLIO_CONFIG } from '../../config/portfolio.config';
+import { useStore } from '../../store/useStore';
 
 export default function CertificationRing() {
   const certs = PORTFOLIO_CONFIG.certificationGraph;
   const count = certs.length;
   const api = useRef<RapierRigidBody[]>(null);
+  const themeIndex = useStore((state) => state.themeIndex);
+  const theme = PORTFOLIO_CONFIG.themeEngine[themeIndex].tokens;
 
   const positions = useMemo(() => {
     return Array.from({ length: count }, (_, i) => {
@@ -50,7 +53,7 @@ export default function CertificationRing() {
     >
       <instancedMesh args={[undefined, undefined, count]}>
         <sphereGeometry args={[0.2, 16, 16]} />
-        <meshStandardMaterial color="#00d2ff" emissive="#00d2ff" emissiveIntensity={0.5} />
+        <meshStandardMaterial color={theme.accent} emissive={theme.accent} emissiveIntensity={0.5} />
       </instancedMesh>
     </InstancedRigidBodies>
   );

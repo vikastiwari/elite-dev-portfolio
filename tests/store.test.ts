@@ -14,15 +14,15 @@ describe('Zustand Store', () => {
 
   it('should initialize with default values', () => {
     const state = useStore.getState();
-    expect(state.theme).toBe('cyberpunk');
+    expect(state.themeIndex).toBe(0);
     expect(state.isLoaderDismissed).toBe(false);
     expect(state.activeProject).toBeNull();
     expect(state.isHackerMode).toBe(false);
   });
 
   it('should update the theme', () => {
-    useStore.getState().setTheme('matrix');
-    expect(useStore.getState().theme).toBe('matrix');
+    useStore.getState().setThemeIndex(1);
+    expect(useStore.getState().themeIndex).toBe(1);
   });
 
   it('should dismiss the loader', () => {
