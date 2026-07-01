@@ -126,6 +126,7 @@ export const ZKVault: React.FC = () => {
                             ))}
                         </div>
                     </div>
+                ) : (
                     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
                         <div className="bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/30 rounded-xl p-6 mb-6">
                             <h3 className="text-xl font-bold text-[var(--color-text)] mb-2 flex items-center gap-2">
