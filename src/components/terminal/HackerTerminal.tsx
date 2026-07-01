@@ -42,9 +42,12 @@ export default function HackerTerminal() {
           term.writeln('');
           
           if (input.trim() === 'help') {
-            term.writeln('Commands: help, whoami, clear');
+            term.writeln('Commands: help, whoami, clear, sudo play');
           } else if (input.trim() === 'clear') {
             term.clear();
+          } else if (input.trim() === 'sudo play' || input.trim() === 'play') {
+            useStore.getState().toggleGameMode();
+            term.writeln('Initializing WebGL Physics Sandbox...');
           } else if (input.trim().length > 0) {
             // Send to chat API
             try {

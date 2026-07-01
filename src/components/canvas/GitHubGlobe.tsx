@@ -116,13 +116,14 @@ export default function GitHubGlobe() {
         const theme = document.documentElement.getAttribute('data-theme') || 'cyberpunk';
         const isLight = theme.includes('light');
         
-        const computedColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim();
-        if (computedColor) {
-           material.color.set(computedColor);
+        const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim();
+        const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim();
+        if (primaryColor) {
+           material.color.set(isLight ? accentColor : primaryColor);
         }
 
         material.blending = isLight ? THREE.NormalBlending : THREE.AdditiveBlending;
-        material.opacity = isLight ? 0.9 : 0.6;
+        material.opacity = isLight ? 1.0 : 0.6;
         material.needsUpdate = true;
       };
 
