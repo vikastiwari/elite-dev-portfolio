@@ -12,6 +12,7 @@ export default function GitHubGlobe() {
     let renderer: WebGPURenderer | null = null;
     let animationFrameId: number;
     let isDestroyed = false;
+    let observer: MutationObserver | null = null;
 
     const init = async () => {
       const container = containerRef.current;
@@ -111,6 +112,24 @@ export default function GitHubGlobe() {
       const instancedMesh = new THREE.InstancedMesh(geometry, material, particleCount);
       scene.add(instancedMesh);
 
+      const updateTheme = () => {
+        const theme = document.documentElement.getAttribute('data-theme') || 'cyberpunk';
+        const isLight = theme.includes('light');
+        
+        const computedColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim();
+        if (computedColor) {
+           material.color.set(computedColor);
+        }
+
+        material.blending = isLight ? THREE.NormalBlending : THREE.AdditiveBlending;
+        material.opacity = isLight ? 0.9 : 0.6;
+        material.needsUpdate = true;
+      };
+
+      updateTheme();
+      observer = new MutationObserver(updateTheme);
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
       const render = async () => {
         if (isDestroyed) return;
         
@@ -140,6 +159,7 @@ export default function GitHubGlobe() {
 
     return () => {
       isDestroyed = true;
+      if (observer) observer.disconnect();
       if (animationFrameId) cancelAnimationFrame(animationFrameId);
       if (renderer && containerRef.current) {
         containerRef.current.removeChild(renderer.domElement);
