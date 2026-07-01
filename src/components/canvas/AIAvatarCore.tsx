@@ -1,8 +1,10 @@
 import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Icosahedron } from '@react-three/drei';
+import { TorusKnot } from '@react-three/drei';
 import * as THREE from 'three';
 import { audioEngine } from '../../utils/audioEngine';
+import { useStore } from '../../store/useStore';
+import { PORTFOLIO_CONFIG } from '../../config/portfolio.config';
 
 export default function AIAvatarCore() {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -13,7 +15,8 @@ export default function AIAvatarCore() {
       uniforms: {
         time: { value: 0 },
         audioFrequency: { value: 0 },
-        color: { value: new THREE.Color('#3b82f6') } // brand-500
+        primaryColor: { value: new THREE.Color() },
+        accentColor: { value: new THREE.Color() }
       },
       vertexShader: `
         uniform float time;
@@ -102,14 +105,20 @@ export default function AIAvatarCore() {
         }
       `,
       fragmentShader: `
-        uniform vec3 color;
+        uniform vec3 primaryColor;
+        uniform vec3 accentColor;
         uniform float audioFrequency;
         varying vec2 vUv;
         varying vec3 vNormal;
         
         void main() {
           float intensity = 0.5 + 0.5 * audioFrequency;
-          vec3 finalColor = color * intensity;
+          
+          // Mix between primary and accent colors based on geometry UV and audio intensity
+          float mixFactor = clamp(vUv.y + audioFrequency - 0.2, 0.0, 1.0);
+          vec3 mixedColor = mix(primaryColor, accentColor, mixFactor);
+          
+          vec3 finalColor = mixedColor * intensity;
           
           // Add some fake fresnel
           float fresnel = dot(vNormal, vec3(0.0, 0.0, 1.0));
@@ -128,6 +137,11 @@ export default function AIAvatarCore() {
   useFrame((state) => {
     if (material) {
       material.uniforms.time.value = state.clock.elapsedTime;
+      
+      const currentThemeId = useStore.getState().currentTheme;
+      const theme = PORTFOLIO_CONFIG.themeEngine.find(t => t.id === currentThemeId) || PORTFOLIO_CONFIG.themeEngine[0];
+      material.uniforms.primaryColor.value.set(theme.tokens.primary);
+      material.uniforms.accentColor.value.set(theme.tokens.accent);
       
       const freqData = audioEngine.getFrequencyData();
       if (freqData) {
@@ -153,7 +167,7 @@ export default function AIAvatarCore() {
 
   return (
     <group position={[0, 0, 0]} data-testid="ai-avatar-core">
-      <Icosahedron ref={meshRef} args={[2, 4]} material={material} />
+      <TorusKnot ref={meshRef} args={[1.5, 0.4, 128, 32]} material={material} />
     </group>
   );
 }

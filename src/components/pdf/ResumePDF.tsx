@@ -83,10 +83,10 @@ export default function ResumePDF() {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Experience & Projects</Text>
-          {PORTFOLIO_CONFIG.projects.map((project, idx) => (
+          {PORTFOLIO_CONFIG.projectMatrix.map((project, idx) => (
             <View key={idx} style={styles.projectBlock}>
               <Text style={styles.projectName}>{project.title}</Text>
-              <Text style={styles.projectDesc}>{project.description}</Text>
+              <Text style={styles.projectDesc}>{project.architectureSummary}</Text>
             </View>
           ))}
         </View>

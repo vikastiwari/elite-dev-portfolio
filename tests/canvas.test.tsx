@@ -22,6 +22,7 @@ vi.mock('@react-three/fiber', () => ({
 vi.mock('@react-three/drei', () => ({
   Stars: () => <div data-testid="stars" />,
   Icosahedron: ({ children }: any) => <div data-testid="icosahedron">{children}</div>,
+  TorusKnot: ({ children }: any) => <div data-testid="torus-knot">{children}</div>,
   PerformanceMonitor: () => <div data-testid="mock-perf-monitor" />,
   Text: ({ children }: any) => <div data-testid="drei-text">{children}</div>
 }));

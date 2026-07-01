@@ -13,6 +13,12 @@ export const PORTFOLIO_CONFIG = {
       email: "vikas@example.com"
     }
   },
+  resumeData: {
+    name: "Vikas Tiwari",
+    title: "Senior Full Stack Engineer & Systems Architect",
+    email: "vikas@example.com",
+    summary: "Top 1% engineer specializing in C++20 HFT, Rust zkML, and Python AI Swarms. Proven track record in ultra-low-latency systems and agentic RAG architectures."
+  },
   themeEngine: [
     {
       id: "cyberpunk",
