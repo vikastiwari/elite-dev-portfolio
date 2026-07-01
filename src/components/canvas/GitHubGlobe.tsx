@@ -113,13 +113,16 @@ export default function GitHubGlobe() {
       scene.add(instancedMesh);
 
       const updateTheme = () => {
+        const theme = document.documentElement.getAttribute('data-theme') || 'cyberpunk';
+        const isLight = theme.includes('light');
+        
         const computedColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim();
         if (computedColor) {
            material.color.set(computedColor);
         }
 
-        material.blending = THREE.AdditiveBlending;
-        material.opacity = 0.6;
+        material.blending = isLight ? THREE.NormalBlending : THREE.AdditiveBlending;
+        material.opacity = isLight ? 0.9 : 0.6;
         material.needsUpdate = true;
       };
 
