@@ -1,6 +1,6 @@
 # Elite Developer Portfolio: High-Performance Architecture
 
-An advanced, WebGL-powered spatial portfolio engineered for an AI-Augmented Systems Architect and Top 1% C++ HFT Engineer. 
+An advanced, WebGL-powered spatial portfolio engineered for an AI-Augmented Systems Architect and Elite C++ HFT Engineer. 
 
 This is not a standard scrolling website. It is a live, 120 FPS physics simulation that proves elite engineering capability through action, not just words.
 

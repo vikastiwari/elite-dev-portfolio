@@ -48,7 +48,7 @@ graph TD
    - For production deployments, Cloudflare Workers handles embeddings and RAG via Vectorize and D1 to achieve sub-50ms TTFT (Time To First Token).
    - For open-source forkability, an adapter gracefully degrades to calling the Gemini REST API if standard `.env` keys are used instead of Cloudflare bindings.
 
-5. **Phase 6 God-Tier Upgrades:**
+5. **Phase 6 Advanced Performance Enhancements:**
    - **TSL WebGPU Shaders:** We explicitly avoid R3F main-thread bottlenecks by utilizing Three Shading Language (TSL) uniforms modified inside `useFrame` for Audio-Reactive WebGPU physics.
    - **Client-Side WASM PDFs:** We utilize `@react-pdf/renderer` for zero-latency, edge-free PDF generation.
    - **Focus Mode Frameloop Control:** The WebGPU canvas gracefully suspends via `frameloop="never"` bound to Zustand, preventing background battery drain.
