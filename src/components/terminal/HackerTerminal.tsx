@@ -75,6 +75,20 @@ export default function HackerTerminal() {
         }
       });
 
+      term.attachCustomKeyEventHandler((e) => {
+        if (e.type === 'keydown' && e.ctrlKey && e.key.toLowerCase() === 'v') {
+          navigator.clipboard.readText().then(text => {
+            const sanitized = text.replace(/\r?\n/g, ' ');
+            input += sanitized;
+            term.write(sanitized);
+          }).catch(err => {
+            console.warn('Clipboard read failed:', err);
+          });
+          return false;
+        }
+        return true;
+      });
+
       xtermRef.current = term;
 
       const handleResize = () => fitAddon.fit();
