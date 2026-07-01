@@ -8,6 +8,7 @@ import HackerTerminal from '../components/terminal/HackerTerminal';
 import KeyboardManager from '../components/KeyboardManager';
 import CinematicLoader from '../components/ui/CinematicLoader';
 import SettingsMenu from '../components/ui/SettingsMenu';
+import DownloadResumeButton from '../components/ui/DownloadResumeButton';
 
 const activeTheme = PORTFOLIO_CONFIG.themeEngine[0].tokens;
 ---
@@ -106,6 +107,9 @@ const activeTheme = PORTFOLIO_CONFIG.themeEngine[0].tokens;
                   <a href={PORTFOLIO_CONFIG.personalProfile.contact.github} target="_blank" class="px-8 py-4 font-bold text-white glass rounded-full hover:bg-white/10 transition-all hover:border-brand-400/50 flex items-center justify-center gap-2">
                       <i class="fa-brands fa-github text-xl"></i> View GitHub
                   </a>
+                  <div class="flex items-center justify-center">
+                      <DownloadResumeButton client:only="react" />
+                  </div>
               </div>
           </div>
 
