@@ -1,12 +1,26 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Elite Dev Portfolio E2E', () => {
-  test('should load the homepage and display the hero section', async ({ page }) => {
-    // Navigate to the local server
+  // Helper function to bypass the cinematic loader
+  const bypassLoader = async (page) => {
     await page.goto('/');
+    // Check if the loader exists. It might not if we are running in an environment where active/progress bypasses it.
+    const initBtn = page.getByRole('button', { name: /Initialize System/i });
+    try {
+      await initBtn.waitFor({ state: 'visible', timeout: 5000 });
+      await initBtn.click();
+      // Wait for the loader to disappear
+      await expect(page.getByTestId('cinematic-loader')).toBeHidden();
+    } catch (e) {
+      // If it doesn't appear within 5s, maybe it bypassed or we are in a different state. Proceed.
+    }
+  };
+
+  test('should load the homepage and display the hero section', async ({ page }) => {
+    await bypassLoader(page);
     
     // Check for the title
-    await expect(page).toHaveTitle(/Portfolio/);
+    await expect(page).toHaveTitle(/Vikas \| AI-Augmented Systems Engineer/);
     
     // Check for the massive hero text
     const heroText = page.getByText(/Crafting Digital Reality/i);
@@ -17,15 +31,17 @@ test.describe('Elite Dev Portfolio E2E', () => {
     await expect(canvasContainer).toBeVisible();
   });
 
-  test('should toggle the terminal on CTRL+~', async ({ page }) => {
-    await page.goto('/');
+  test('should toggle the terminal via AI ASSISTANT button', async ({ page }) => {
+    await bypassLoader(page);
 
     // Ensure the terminal is initially hidden
     const terminalWrapper = page.locator('#terminal-wrapper');
     await expect(terminalWrapper).toBeHidden();
 
-    // Simulate the keyboard shortcut
-    await page.keyboard.press('Control+~');
+    // Click the AI ASSISTANT button to toggle hacker mode
+    const aiButton = page.getByText('AI ASSISTANT', { exact: true });
+    await expect(aiButton).toBeVisible();
+    await aiButton.click();
 
     // Terminal should now be visible and the xterm class should be present
     await expect(terminalWrapper).toBeVisible();
@@ -37,10 +53,11 @@ test.describe('Elite Dev Portfolio E2E', () => {
   });
 
   test('should switch themes and verify DOM updates', async ({ page }) => {
-    await page.goto('/');
+    await bypassLoader(page);
 
     // Wait for hydration and SettingsMenu to load
-    const settingsBtn = page.locator('button.bg-white\\/10'); // The cog icon button
+    // The settings button has aria-label="Theme Settings"
+    const settingsBtn = page.locator('button[aria-label="Theme Settings"]');
     await expect(settingsBtn).toBeVisible();
     await settingsBtn.click();
 

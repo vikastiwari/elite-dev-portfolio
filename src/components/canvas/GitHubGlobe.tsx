@@ -114,7 +114,7 @@ export default function GitHubGlobe() {
 
       const updateTheme = () => {
         const theme = document.documentElement.getAttribute('data-theme') || 'cyberpunk';
-        const isLight = theme.includes('light');
+        const isLight = theme === 'minimalist' || theme.includes('light');
         
         const computedColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim();
         if (computedColor) {

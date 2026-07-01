@@ -6,22 +6,22 @@
 
 # Test info
 
-- Name: portfolio.spec.ts >> Elite Dev Portfolio E2E >> should switch themes and verify DOM updates
-- Location: tests/e2e/portfolio.spec.ts:39:3
+- Name: portfolio.spec.ts >> Elite Dev Portfolio E2E >> should load the homepage and display the hero section
+- Location: tests/e2e/portfolio.spec.ts:4:3
 
 # Error details
 
 ```
 Error: expect(locator).toBeVisible() failed
 
-Locator: locator('button.bg-white\\/10')
+Locator: getByText('Vikas', { exact: true })
 Expected: visible
 Timeout: 5000ms
 Error: element(s) not found
 
 Call log:
   - Expect "toBeVisible" with timeout 5000ms
-  - waiting for locator('button.bg-white\\/10')
+  - waiting for getByText('Vikas', { exact: true })
 
 ```
 
@@ -53,6 +53,7 @@ Call log:
   - paragraph: "const developer = {"
   - paragraph: "name: 'Vikas Tiwari',"
   - paragraph: "role: 'Senior Full Stack Engineer',"
+  - paragraph: "skills: ['React', 'Rust', 'Python'],"
   - text: Scroll 
 - heading "Engineering Excellence" [level=2]
 - paragraph: Mastering the entire stack with a focus on architecture, performance, and clean code.
@@ -88,7 +89,6 @@ Call log:
 - text: AI MLOps
 - heading "Live Global Commits" [level=2]
 - paragraph: Simulating a real-time stream of 1,000,000 parallel events computed entirely on the GPU via Three Shading Language (TSL).
-- text: ">> ORBITAL_COMMAND_SYNC MODULE: LIVE_GITHUB_COMMITS RENDERER: WEBGPU SHADER: TSL_COMPUTE PARTICLES: 1,000,000 STATUS: COMPUTE_SHADER_ACTIVE"
 - heading "Selected Works" [level=2]
 - link "View full archive ":
   - /url: https://github.com/vikas-elite
@@ -201,60 +201,63 @@ Call log:
   5  |     // Navigate to the local server
   6  |     await page.goto('/');
   7  |     
-  8  |     // Check for the title
-  9  |     await expect(page).toHaveTitle(/Portfolio/);
+  8  |     // Check for the new exact title
+  9  |     await expect(page).toHaveTitle(/Vikas \| AI-Augmented Systems Engineer/);
   10 |     
-  11 |     // Check for the massive hero text
-  12 |     const heroText = page.getByText(/Crafting Digital Reality/i);
-  13 |     await expect(heroText).toBeVisible();
+  11 |     // Check for the massive hero text (first name)
+  12 |     const heroText = page.getByText('Vikas', { exact: true });
+> 13 |     await expect(heroText).toBeVisible();
+     |                            ^ Error: expect(locator).toBeVisible() failed
   14 | 
   15 |     // Ensure the WebGL canvas wrapper exists
   16 |     const canvasContainer = page.locator('.bg-mesh');
   17 |     await expect(canvasContainer).toBeVisible();
   18 |   });
   19 | 
-  20 |   test('should toggle the terminal on CTRL+~', async ({ page }) => {
+  20 |   test('should toggle the terminal via AI ASSISTANT button', async ({ page }) => {
   21 |     await page.goto('/');
   22 | 
   23 |     // Ensure the terminal is initially hidden
   24 |     const terminalWrapper = page.locator('#terminal-wrapper');
   25 |     await expect(terminalWrapper).toBeHidden();
   26 | 
-  27 |     // Simulate the keyboard shortcut
-  28 |     await page.keyboard.press('Control+~');
-  29 | 
-  30 |     // Terminal should now be visible and the xterm class should be present
-  31 |     await expect(terminalWrapper).toBeVisible();
-  32 |     await expect(page.locator('.xterm')).toBeVisible();
-  33 | 
-  34 |     // Toggle off
-  35 |     await page.keyboard.press('Control+~');
-  36 |     await expect(terminalWrapper).toBeHidden();
-  37 |   });
-  38 | 
-  39 |   test('should switch themes and verify DOM updates', async ({ page }) => {
-  40 |     await page.goto('/');
-  41 | 
-  42 |     // Wait for hydration and SettingsMenu to load
-  43 |     const settingsBtn = page.locator('button.bg-white\\/10'); // The cog icon button
-> 44 |     await expect(settingsBtn).toBeVisible();
-     |                               ^ Error: expect(locator).toBeVisible() failed
-  45 |     await settingsBtn.click();
-  46 | 
-  47 |     // Click on the Matrix theme
-  48 |     const matrixThemeBtn = page.locator('button:has-text("Matrix")');
-  49 |     await expect(matrixThemeBtn).toBeVisible();
-  50 |     await matrixThemeBtn.click();
-  51 | 
-  52 |     // Verify CSS variables are updated (Matrix theme accent is #00ff41)
-  53 |     const body = page.locator('body');
-  54 |     const accentVar = await body.evaluate((el) => {
-  55 |       return getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim();
-  56 |     });
-  57 |     
-  58 |     // Check that accent color updated to Matrix's green
-  59 |     expect(accentVar).toBe('#00ff41');
-  60 |   });
-  61 | });
-  62 | 
+  27 |     // Click the AI ASSISTANT button to toggle hacker mode
+  28 |     const aiButton = page.getByText('AI ASSISTANT', { exact: true });
+  29 |     await expect(aiButton).toBeVisible();
+  30 |     await aiButton.click();
+  31 | 
+  32 |     // Terminal should now be visible and the xterm class should be present
+  33 |     await expect(terminalWrapper).toBeVisible();
+  34 |     await expect(page.locator('.xterm')).toBeVisible();
+  35 | 
+  36 |     // Toggle off
+  37 |     await page.keyboard.press('Control+~');
+  38 |     await expect(terminalWrapper).toBeHidden();
+  39 |   });
+  40 | 
+  41 |   test('should switch themes and verify DOM updates', async ({ page }) => {
+  42 |     await page.goto('/');
+  43 | 
+  44 |     // Wait for hydration and SettingsMenu to load
+  45 |     // The settings button has aria-label="Theme Settings"
+  46 |     const settingsBtn = page.locator('button[aria-label="Theme Settings"]');
+  47 |     await expect(settingsBtn).toBeVisible();
+  48 |     await settingsBtn.click();
+  49 | 
+  50 |     // Click on the Matrix theme
+  51 |     const matrixThemeBtn = page.locator('button:has-text("Matrix")');
+  52 |     await expect(matrixThemeBtn).toBeVisible();
+  53 |     await matrixThemeBtn.click();
+  54 | 
+  55 |     // Verify CSS variables are updated (Matrix theme accent is #00ff41)
+  56 |     const body = page.locator('body');
+  57 |     const accentVar = await body.evaluate((el) => {
+  58 |       return getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim();
+  59 |     });
+  60 |     
+  61 |     // Check that accent color updated to Matrix's green
+  62 |     expect(accentVar).toBe('#00ff41');
+  63 |   });
+  64 | });
+  65 | 
 ```
