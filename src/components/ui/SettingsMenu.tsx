@@ -36,6 +36,15 @@ export default function SettingsMenu() {
     document.documentElement.style.setProperty('--color-secondary', theme.surface);
     document.documentElement.style.setProperty('--color-accent', theme.accent);
     
+    // Compute text and glass variables based on background
+    const isLight = theme.background.toLowerCase() === '#ffffff';
+    document.documentElement.style.setProperty('--text-primary', isLight ? '#0f172a' : '#ffffff');
+    document.documentElement.style.setProperty('--text-secondary', isLight ? '#334155' : '#cbd5e1');
+    document.documentElement.style.setProperty('--text-muted', isLight ? '#64748b' : '#94a3b8');
+    document.documentElement.style.setProperty('--glass-bg', isLight ? 'rgba(0,0,0,0.03)' : 'rgba(255,255,255,0.03)');
+    document.documentElement.style.setProperty('--glass-border', isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.05)');
+    document.documentElement.style.setProperty('--glass-card-bg', isLight ? 'rgba(255,255,255,0.6)' : 'rgba(17,24,39,0.6)');
+
     if (audioEngine.enabled) audioEngine.playHover();
   };
 
