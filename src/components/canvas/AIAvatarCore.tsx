@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useGLTF, Environment } from '@react-three/drei';
 import * as THREE from 'three';
@@ -7,70 +7,86 @@ import { useStore } from '../../store/useStore';
 
 export default function AIAvatarCore() {
   const group = useRef<THREE.Group>(null);
-  // Reverted to DamagedHelmet as the reliable local asset
-  const { scene } = useGLTF('/DamagedHelmet.glb') as any;
+  const { scene, nodes, materials } = useGLTF('/avatar.glb') as any;
   const { mouse } = useThree();
   const toggleHackerMode = useStore(state => state.toggleHackerMode);
+  
+  const [headBone, setHeadBone] = useState<THREE.Bone | null>(null);
+  const [neckBone, setNeckBone] = useState<THREE.Bone | null>(null);
 
-  // Extract materials that have emissive properties to pulse them
-  const emissiveMaterials = useMemo(() => {
-    const materials: THREE.MeshStandardMaterial[] = [];
+  useEffect(() => {
+    // Find the head and neck bones dynamically (works for Mixamo/Xbot)
+    let foundHead = null;
+    let foundNeck = null;
+    
     scene.traverse((child: any) => {
-      if (child.isMesh && child.material) {
-        // Clone material so we don't mutate the cached GLTF globally
-        child.material = child.material.clone();
-        if (child.material.emissive) {
-          materials.push(child.material);
+      if (child.isBone) {
+        if (child.name.toLowerCase().includes('head')) {
+          foundHead = child;
+        }
+        if (child.name.toLowerCase().includes('neck')) {
+          foundNeck = child;
         }
       }
+      
+      // Make the materials look cyberpunk/holographic
+      if (child.isMesh && child.material) {
+        child.material = child.material.clone();
+        child.material.transparent = true;
+        child.material.opacity = 0.9;
+        child.material.color.setHex(0x06b6d4); // Cyan tint
+        child.material.emissive.setHex(0x000000);
+        child.material.wireframe = false;
+      }
     });
-    return materials;
+
+    setHeadBone(foundHead);
+    setNeckBone(foundNeck);
   }, [scene]);
 
   useFrame((state) => {
-    if (group.current) {
-      const time = state.clock.elapsedTime;
+    if (!group.current) return;
+    const time = state.clock.elapsedTime;
 
-      // 1. Digital Twin Cursor Tracking (Helmet tracks mouse)
-      const targetX = mouse.x * 1.2;
-      const targetY = mouse.y * 1.2;
-      group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetX, 0.1);
-      group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, -targetY, 0.1);
-      
-      // Add a subtle floating animation (Google AI style)
-      group.current.position.y = Math.sin(time * 2) * 0.1;
+    // Subtle floating
+    group.current.position.y = -2.5 + Math.sin(time * 2) * 0.05;
 
-      // 2. Audio-Reactive "Glowing Core"
-      const freqData = audioEngine.getFrequencyData();
-      let audioForce = 0;
-      
-      if (freqData) {
-        let sum = 0;
-        const limit = Math.min(20, freqData.length);
-        for (let i = 0; i < limit; i++) {
-          sum += freqData[i];
-        }
-        const avg = sum / limit;
-        audioForce = avg / 255.0; // 0 to 1
+    // Audio Reactivity
+    const freqData = audioEngine.getFrequencyData();
+    let audioForce = 0;
+    if (freqData) {
+      let sum = 0;
+      const limit = Math.min(20, freqData.length);
+      for (let i = 0; i < limit; i++) {
+        sum += freqData[i];
       }
+      audioForce = (sum / limit) / 255.0; // 0 to 1
+    }
 
-      // Pulse the scale slightly
-      const targetScale = 2.0 + (audioForce * 0.4);
-      group.current.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 0.2);
+    // 1. Digital Twin Cursor Tracking (Head/Neck bones)
+    if (neckBone && headBone) {
+      const targetX = -mouse.y * 0.8;
+      const targetY = mouse.x * 0.8;
+      
+      // Add audio force to the X rotation so the robot nods to the beat!
+      const nodAngle = audioForce * 0.5;
 
-      // Pulse the emissive glowing lights (Eyes/Core) on the helmet
-      const emissiveIntensity = 1 + (audioForce * 10.0); // massive glow when speaking
-      emissiveMaterials.forEach(mat => {
-        mat.emissiveIntensity = THREE.MathUtils.lerp(mat.emissiveIntensity, emissiveIntensity, 0.2);
-      });
+      neckBone.rotation.x = THREE.MathUtils.lerp(neckBone.rotation.x, targetX * 0.5 + nodAngle, 0.1);
+      neckBone.rotation.y = THREE.MathUtils.lerp(neckBone.rotation.y, targetY * 0.5, 0.1);
+      
+      headBone.rotation.x = THREE.MathUtils.lerp(headBone.rotation.x, targetX * 0.5 + nodAngle, 0.1);
+      headBone.rotation.y = THREE.MathUtils.lerp(headBone.rotation.y, targetY * 0.5, 0.1);
+    } else {
+      // Fallback: rotate the whole body if bones aren't found
+      group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, mouse.x * 0.5, 0.1);
     }
   });
 
   return (
     <group 
       ref={group} 
-      position={[0, 0, 0]} 
-      scale={2.0}
+      position={[0, -2.5, 1]} 
+      scale={2.2}
       data-testid="ai-avatar-core"
       onClick={(e) => {
         e.stopPropagation();
@@ -81,12 +97,13 @@ export default function AIAvatarCore() {
     >
       <primitive object={scene} />
       
-      {/* PBR Environment for hyper-realistic metallic reflections */}
+      {/* PBR Environment for hyper-realistic lighting */}
       <Environment preset="city" />
       <ambientLight intensity={0.5} />
-      <directionalLight position={[5, 5, 5]} intensity={1} />
+      <directionalLight position={[5, 10, 5]} intensity={1.5} color="#00ffcc" />
+      <pointLight position={[-5, 5, 5]} intensity={1.0} color="#ff00ff" />
     </group>
   );
 }
 
-useGLTF.preload('/DamagedHelmet.glb');
+useGLTF.preload('/avatar.glb');
