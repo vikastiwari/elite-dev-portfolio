@@ -66,22 +66,27 @@ export default function GitHubGlobe() {
         targetPositions[i*3+2] = bz * burstMultiplier;
       }
 
+      const baseBuffer = new THREE.InstancedBufferAttribute(new Float32Array(basePositions), 3);
       const positionBuffer = new THREE.InstancedBufferAttribute(basePositions, 3);
       const targetBuffer = new THREE.InstancedBufferAttribute(targetPositions, 3);
       
+      const baseStorage = storage(baseBuffer, 'vec3', particleCount);
       const positionStorage = storage(positionBuffer, 'vec3', particleCount);
       const targetStorage = storage(targetBuffer, 'vec3', particleCount);
 
       // The TSL Compute Shader
       const computeParticles = Fn(() => {
+          const basePos = baseStorage.element(instanceIndex);
           const currentPos = positionStorage.element(instanceIndex);
           const targetPos = targetStorage.element(instanceIndex);
           
           const iFloat = float(instanceIndex);
           const speed = float(2.0);
-          const oscillation = sin(time.mul(speed).add(iFloat.mul(0.0001))).add(1.0).mul(0.5); // 0 to 1
+          // Math: Smoothly pulse between 0 and 1
+          const oscillation = sin(time.mul(speed).add(iFloat.mul(0.0001))).add(1.0).mul(0.5); 
           
-          const newPos = mix(currentPos, targetPos, oscillation.mul(0.05));
+          // Pure functional position calculation based on time
+          const newPos = mix(basePos, targetPos, oscillation);
           
           currentPos.assign(newPos);
       });
