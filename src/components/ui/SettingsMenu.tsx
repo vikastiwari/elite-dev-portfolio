@@ -45,6 +45,11 @@ export default function SettingsMenu() {
     document.documentElement.style.setProperty('--glass-border', isLight ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.05)');
     document.documentElement.style.setProperty('--glass-card-bg', isLight ? 'rgba(255,255,255,0.6)' : 'rgba(17,24,39,0.6)');
 
+    // Dynamic selection and mesh colors for light mode
+    document.documentElement.style.setProperty('--mesh-color', isLight ? '#94a3b8' : theme.primary);
+    document.documentElement.style.setProperty('--selection-bg', isLight ? '#cbd5e1' : theme.accent);
+    document.documentElement.style.setProperty('--selection-text', isLight ? '#0f172a' : '#ffffff');
+
     // Compute button colors based on specific themes for better contrast
     let btnBg, btnText;
     if (PORTFOLIO_CONFIG.themeEngine[nextIndex].id === 'minimalist') {
@@ -83,24 +88,24 @@ export default function SettingsMenu() {
   };
 
   return (
-    <div className="flex items-center gap-2 ml-8 border-l border-white/10 pl-8">
+    <div className="flex items-center gap-2 ml-8 border-l border-l-[var(--glass-border)] pl-8">
       <button 
         onClick={cycleTheme}
-        className="text-slate-400 hover:text-brand-400 transition-colors w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/5"
+        className="text-text-muted hover:text-brand-400 transition-colors w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--glass-border)]"
         title={`Theme: ${PORTFOLIO_CONFIG.themeEngine[themeIndex].name}`}
       >
         <i className="fa-solid fa-palette text-lg"></i>
       </button>
       <button 
         onClick={cycleMusic}
-        className={`transition-colors w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/5 ${musicTrack !== 'off' ? 'text-brand-400' : 'text-slate-400 hover:text-brand-400'}`}
+        className={`transition-colors w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--glass-border)] ${musicTrack !== 'off' ? 'text-brand-400' : 'text-text-muted hover:text-brand-400'}`}
         title={`Music: ${musicTrack.toUpperCase()}`}
       >
         <i className={`fa-solid text-lg ${musicTrack === 'intense' ? 'fa-music' : musicTrack === 'light' ? 'fa-headphones' : 'fa-play'}`}></i>
       </button>
       <button 
         onClick={toggleSound}
-        className={`transition-colors w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/5 ${soundEnabled ? 'text-brand-400' : 'text-slate-400 hover:text-brand-400'}`}
+        className={`transition-colors w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--glass-border)] ${soundEnabled ? 'text-brand-400' : 'text-text-muted hover:text-brand-400'}`}
         title={soundEnabled ? "SFX: ON" : "SFX: OFF"}
       >
         <i className={`fa-solid text-lg ${soundEnabled ? 'fa-volume-high' : 'fa-volume-xmark'}`}></i>

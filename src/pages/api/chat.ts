@@ -1,8 +1,11 @@
 import type { APIRoute } from 'astro';
 
+export const prerender = false;
+
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const body = await request.json();
+    const text = await request.text();
+    const body = text ? JSON.parse(text) : {};
     const userMessage = body.message || '';
 
     // Phase 3 MVP: Mocked response. 
@@ -19,7 +22,7 @@ export const POST: APIRoute = async ({ request }) => {
         'Content-Type': 'application/json'
       }
     });
-  } catch (err) {
-    return new Response(JSON.stringify({ error: 'Invalid request' }), { status: 400 });
+  } catch (err: any) {
+    return new Response(JSON.stringify({ error: 'Invalid request', details: err.message }), { status: 400 });
   }
 };

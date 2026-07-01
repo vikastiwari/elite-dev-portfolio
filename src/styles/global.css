@@ -14,6 +14,10 @@
   --color-dark-800: var(--color-secondary, #111827);
   --color-dark-700: color-mix(in srgb, var(--color-secondary, #111827) 80%, white);
 
+  --color-mesh-color: var(--mesh-color, var(--color-primary, #38bdf8));
+  --color-selection-bg: var(--selection-bg, var(--color-accent, #6366f1));
+  --color-selection-text: var(--selection-text, #ffffff);
+
   --color-btn-bg: var(--btn-bg, var(--color-accent, #6366f1));
   --color-btn-text: var(--btn-text, #ffffff);
 
@@ -154,7 +158,7 @@
   width: 50vw;
   height: 50vw;
   border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--color-brand-400) 15%, transparent) 0%, transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-mesh-color) 15%, transparent) 0%, transparent 70%);
 }
 
 .mesh-blob-2 {
@@ -164,7 +168,7 @@
   width: 60vw;
   height: 60vw;
   border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--color-brand-600) 15%, transparent) 0%, transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-mesh-color) 15%, transparent) 0%, transparent 70%);
 }
 
 .mesh-blob-3 {
@@ -175,5 +179,5 @@
   width: 40vw;
   height: 40vw;
   border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--color-brand-700) 10%, transparent) 0%, transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-mesh-color) 10%, transparent) 0%, transparent 70%);
 }
