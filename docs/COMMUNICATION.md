@@ -26,3 +26,8 @@ To solve this, we rely on **Zustand** as a transient state manager.
 - The AI chat interface connects to `/api/chat`.
 - To mask Time-To-First-Token (TTFT) latency, the Edge function streams the LLM response back to the client using **Server-Sent Events (SSE)**.
 - The UI handles the incoming stream chunk-by-chunk to create the typing effect.
+
+## ZK-Vault Cryptographic Communication
+- The vault executes mathematically isolated.
+- The `secretCode` input is strictly bounded to the React component scope. It is never passed to a Zustand store, preventing memory leaks, and is instantly pushed to the `snarkjs.groth16.fullProve` WASM worker.
+- The result is a mathematically pure validation without external API dependency.

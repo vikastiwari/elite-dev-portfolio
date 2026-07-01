@@ -8,6 +8,12 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
+## Deployment (Cloudflare Pages)
+
+We utilize the `@astrojs/cloudflare` adapter.
+When pushing to the `main` branch, the GitHub Action automatically runs `npm run build` targeting Cloudflare's Edge nodes.
+Ensure you have set `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` in your GitHub repository secrets.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build

@@ -29,20 +29,20 @@ The execution of this high-performance portfolio follows a strict Phased Impleme
 - Finalize the 4-6 Theme configurations and wire them to shader uniforms.
 - Run Lighthouse and WebGL profiling (targeting 120 FPS desktop, 60 FPS mobile).
 
-## Phase 5: Testing & CI/CD (Week 8)
-- Implement Playwright E2E tests for WebGL interactions.
-- Set up GitHub Actions for automated deployment to Cloudflare Pages.
+## Phase 5: Testing & CI/CD (Completed)
+- **Playwright Automation:** Implemented Playwright E2E tests for WebGL interactions, Terminal shortcuts, and DOM theme swaps.
+- **Continuous Deployment:** Set up comprehensive GitHub Actions for automated testing and edge deployment to Cloudflare Pages.
 
 ## Phase 6: God-Tier MVP (Completed)
 - **Executive Override (Focus Mode):** Implement `frameloop="never"` suspension to gracefully toggle to a 2D high-contrast resume, preventing background WebGPU battery drain.
 - **Audio-Reactive AI Core:** Build a TSL Compute Shader bound to the WebAudio API AnalyserNode, mutated safely outside the React render lifecycle.
 - **Instant WASM PDF Resume:** Isolate a `src/components/pdf/` architecture and utilize `@react-pdf/renderer` for instantaneous client-side PDF downloads.
 
-## Phase 7: Component Modularity & Custom Content (Current Phase)
+## Phase 7: Component Modularity & Custom Content (Completed)
 - **Architectural Extraction:** Break monolithic Astro pages into highly reusable components (`src/components/sections/`).
 - **Dynamic Video Logic:** Create robust mappings for project video WebP/MP4 animations using `ProjectVideoPlayer`.
 - **Content Population:** Final user content rewrite of headers, expertise, and projects.
 
-## Phase 8: Future Expansions
-- **In-Browser ZK-Proof Vault:** Implement Circom circuits + `snarkjs` for recruiter verification.
+## Phase 8: Future Expansions (ZK Complete)
+- **In-Browser ZK-Proof Vault (Completed):** Implemented a Circom Poseidon-Hash circuit + `snarkjs` for completely client-side recruiter verification without exposing secret codes.
 - **Live GitHub Commits Globe:** Shift to a massively parallel TSL compute shader supporting 1,000,000+ particles and bezier curves.

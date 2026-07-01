@@ -16,13 +16,14 @@ We have abandoned the traditional grid layout. This portfolio operates on the **
 - **Physics Engine:** `@react-three/rapier` (WASM-based Rigid Body Dynamics)
 - **AI Brain (Gemini-Lite):** Cloudflare Workers AI + Vectorize Edge RAG (with a fallback `.env` adapter for open-source forkability).
 - **State Management:** Zustand (decoupling DOM from Canvas rendering).
-- **Testing:** 100% Test-Driven Development (TDD) via Vitest & React Testing Library.
+- **Testing & CI/CD:** 100% Test-Driven Development (TDD) via Vitest, Playwright E2E automation, and GitHub Actions global edge deployment to Cloudflare Pages.
 
 ## 🛠️ Elite Features
-1. **Forkable AI Adapter:** Drop in your `GEMINI_API_KEY` to instantly have your own AI clone powered by RAG over your resume.
-2. **Hacker Mode (CLI):** Press `CTRL + ~` to drop the WebGL and open a fully functional `xterm.js` Linux terminal.
-3. **Dynamic Thermal Throttling:** Built-in `<PerformanceMonitor>` that automatically degrades graphics on mobile to prevent battery drain.
-4. **Cinematic Loading & Themes:** A booting terminal loader, 4-6 instant WebGPU themes, and Web Audio API procedural UI sounds.
+1. **Zero-Knowledge VIP Vault:** Pure client-side `snarkjs` and Circom cryptography verifies VIP recruiters without sending secret access codes over the network.
+2. **Forkable AI Adapter:** Drop in your `GEMINI_API_KEY` to instantly have your own AI clone powered by RAG over your resume.
+3. **Hacker Mode (CLI):** Press `CTRL + ~` to drop the WebGL and open a fully functional `xterm.js` Linux terminal.
+4. **Dynamic Thermal Throttling:** Built-in `<PerformanceMonitor>` that automatically degrades graphics on mobile to prevent battery drain.
+5. **Cinematic Loading & Themes:** A booting terminal loader, 4-6 instant WebGPU themes, and Web Audio API procedural UI sounds.
 
 ## 📚 Documentation
 Dive deep into our architecture and development guides to understand how this portfolio was engineered and how you can extend it:

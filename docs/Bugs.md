@@ -28,3 +28,11 @@ As an advanced WebGL/Edge application, there are specific platform quirks we mus
 ## 6. Project Animation Clipping
 **Issue:** When displaying 3D animations (like the TorusKnot) in the Project cards, the left side of the animation was clipping.
 **Mitigation:** This was a CSS object-fit issue. Switched the video/image tag property from `object-cover` to `object-contain` in the custom `ProjectVideoPlayer.tsx` to ensure the entire WebP/MP4 frame remains visible within the boundary.
+
+## 7. Playwright E2E Node Environments
+**Issue:** `npm run dev` spawned via Playwright `webServer` block inherits system Node.js instead of NVM Node.js versions in WSL environments, leading to Astro crashes (`registerHooks` undefined on Node v20).
+**Mitigation:** This only impacts manual local testing in weird WSL shells. GitHub Actions handles this gracefully via `actions/setup-node@v4` ensuring a pure v22.12.0 environment for E2E suites.
+
+## 8. SnarkJS Vite Build Incompatibility
+**Issue:** `snarkjs` heavily depends on core Node modules and causes deep Vite roll-up crashes if imported directly in a standard React component (`crypto`, `fs`, `os`).
+**Mitigation:** Dynamically load the pre-compiled, browser-safe `snarkjs.min.js` file from the `public/zk` folder via an inline `<script>` tag in the global `Layout.astro` file, completely bypassing Vite compilation.

@@ -26,6 +26,9 @@ graph TD
     K -->|Standard ENV| M[Gemini API direct]
     
     N[Resume Download] -->|Client Side WASM| O["@react-pdf/renderer"]
+    
+    P[VIP Access Code] -->|snarkjs.groth16| Q[Vault Circuit WASM]
+    Q -->|ZK Proof Verified| R[Decrypt Hidden Payload]
 ```
 
 ## Core Pillars
@@ -50,8 +53,13 @@ graph TD
    - **Client-Side WASM PDFs:** We utilize `@react-pdf/renderer` for zero-latency, edge-free PDF generation.
    - **Focus Mode Frameloop Control:** The WebGPU canvas gracefully suspends via `frameloop="never"` bound to Zustand, preventing background battery drain.
 
-7. **Component Modularity (Phase 7):**
+6. **Component Modularity (Phase 7):**
    - We strictly adhere to single-responsibility files inside `src/components/sections/` for layout orchestration, ensuring ease of customization and maintaining SSR performance.
 
-6. **Test-Driven Development (TDD):**
-   - All core logic, config parsing, and AI endpoints are tested using Vitest before integration into the UI.
+7. **Test-Driven Development & CI/CD (Phase 5):**
+   - **Unit Testing:** All core logic, config parsing, and AI endpoints are tested using Vitest before integration into the UI.
+   - **E2E Testing:** Playwright drives a headless Chromium browser to verify WebGL mounting and terminal interactions.
+   - **CI/CD:** GitHub Actions triggers on every push, runs tests, builds the Astro Cloudflare output, and deploys directly to Cloudflare Pages globally.
+
+8. **Zero-Knowledge Cryptography (Phase 8):**
+   - A dedicated `ZKVault.tsx` executes mathematically rigorous Groth16 proofs natively in the browser via `snarkjs` and Circom. This guarantees a locked section of the portfolio cannot be brute-forced or intercepted.

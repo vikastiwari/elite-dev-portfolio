@@ -8,6 +8,7 @@ HTML-based UI overlays that sit on top of the `<Canvas>`.
 - `HUD.tsx`: The heads-up display containing navigation, theme toggles, and the AI Chatbot interface.
 - `Terminal.tsx`: The `xterm.js` implementation for "Hacker Mode".
 - `PerformanceOverlay.tsx`: Displays live FPS and memory metrics (using `r3f-perf`).
+- `ZKVault.tsx`: A secure cryptographic component that validates VIP access codes entirely in-browser using `snarkjs`.
 
 ## `src/components/sections/`
 Astro components responsible for the core content layout (Phase 7 Modularization).
