@@ -153,7 +153,7 @@ export const PORTFOLIO_CONFIG = {
       status: "Production",
       techStack: ["React", "Vite", "Zustand", "LangGraph"],
       architectureSummary: "A 'God-Tier' AI Agent Dashboard with interactive LangGraph canvas visualizations.",
-      media: { fallback: "/assets/projects/dashboard.jpg" }
+      media: { fallback: "/assets/showcase/icosahedron.webp" }
     },
     {
       id: "proj_youtube",
@@ -174,10 +174,10 @@ export const PORTFOLIO_CONFIG = {
     {
       id: "proj_portfolio",
       title: "elite-dev-portfolio",
-      status: "WIP",
+      status: "Production",
       techStack: ["Astro", "React Three Fiber", "Tailwind"],
-      architectureSummary: "This very website. A config-driven, WebGL-powered portfolio architecture.",
-      media: { fallback: "/assets/projects/portfolio.jpg" }
+      architectureSummary: "This very website. A config-driven, WebGL-powered portfolio architecture featuring audio-reactive AI Core geometries.",
+      media: { fallback: "/assets/showcase/torusknot.webp" }
     }
   ],
   skills: [

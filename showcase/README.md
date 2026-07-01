@@ -1,0 +1,1 @@
+# Phase 6 Core Geometries Showcase\n\nHere are the high-quality animated WebP recordings of the two custom audio-reactive shaders.\n\n- **[TorusKnot](./torusknot.webp)**: The official Phase 6 AI Core.\n- **[Icosahedron](./icosahedron.webp)**: The legacy minimalist core.
