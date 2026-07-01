@@ -2,9 +2,9 @@ import React, { useRef, useMemo } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { Box, Sphere } from '@react-three/drei';
 import * as THREE from 'three';
-import { audioEngine } from '../utils/audioEngine';
-import { useStore } from '../store/useStore';
-import { PORTFOLIO_CONFIG } from '../config/portfolio.config';
+import { audioEngine } from '../../utils/audioEngine';
+import { useStore } from '../../store/useStore';
+import { PORTFOLIO_CONFIG } from '../../config/portfolio.config';
 
 export default function AIAvatarCore() {
   const headGroupRef = useRef<THREE.Group>(null);
