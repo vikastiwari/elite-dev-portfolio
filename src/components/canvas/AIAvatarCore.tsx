@@ -140,8 +140,8 @@ export default function AIAvatarCore() {
     if (material) {
       material.uniforms.time.value = state.clock.elapsedTime;
       
-      const currentThemeId = useStore.getState().currentTheme;
-      const theme = PORTFOLIO_CONFIG.themeEngine.find(t => t.id === currentThemeId) || PORTFOLIO_CONFIG.themeEngine[0];
+      const themeIndex = useStore.getState().themeIndex;
+      const theme = PORTFOLIO_CONFIG.themeEngine[themeIndex] || PORTFOLIO_CONFIG.themeEngine[0];
       material.uniforms.primaryColor.value.set(theme.tokens.primary);
       material.uniforms.accentColor.value.set(theme.tokens.accent);
       
@@ -183,7 +183,17 @@ export default function AIAvatarCore() {
   return (
     <group position={[0, 0, 0]} data-testid="ai-avatar-core">
       <group ref={headGroupRef}>
-        <TorusKnot ref={meshRef} args={[1.5, 0.4, 128, 32]} material={material} />
+        <TorusKnot 
+          ref={meshRef} 
+          args={[1.5, 0.4, 128, 32]} 
+          material={material} 
+          onClick={(e) => {
+            e.stopPropagation();
+            useStore.getState().toggleHackerMode();
+          }}
+          onPointerOver={() => { document.body.style.cursor = 'pointer'; }}
+          onPointerOut={() => { document.body.style.cursor = 'auto'; }}
+        />
       </group>
     </group>
   );
