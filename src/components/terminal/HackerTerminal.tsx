@@ -76,16 +76,32 @@ export default function HackerTerminal() {
 
       const handleResize = () => fitAddon.fit();
       window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
+      
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        try { term.dispose(); } catch (e) {}
+        xtermRef.current = null;
+      };
     }
   }, [isHackerMode]);
+
+  const toggleHackerMode = useStore(state => state.toggleHackerMode);
 
   if (!isHackerMode) return null;
 
   return (
     <div className="fixed inset-x-0 bottom-0 h-1/2 z-50 bg-black/90 border-t-2 border-green-500/50 p-4 font-mono shadow-[0_0_50px_rgba(0,255,0,0.1)] backdrop-blur-md" data-testid="hacker-terminal">
-      <div className="absolute top-2 right-4 text-green-500/50 text-xs uppercase tracking-widest">Orbital Command // Terminal</div>
-      <div ref={terminalRef} className="w-full h-full pt-4" />
+      <div className="absolute top-2 right-4 flex items-center gap-4 z-[60]">
+        <div className="text-green-500/50 text-xs uppercase tracking-widest">Orbital Command // Terminal</div>
+        <button 
+          onClick={() => toggleHackerMode()}
+          className="text-green-500 hover:text-white transition-colors"
+          title="Close Terminal"
+        >
+          <i className="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div ref={terminalRef} className="w-full h-full pt-4 relative z-50" />
     </div>
   );
 }
