@@ -18,12 +18,14 @@ graph TD
     E --> G[Three.js WebGPU Renderer]
     
     G --> H[Rapier Physics Engine N-Body]
+    G --> H2[TSL WebGPU Compute Shaders]
     
     I[User Query] -->|POST /api/chat| J[Cloudflare Worker / API Route]
     J -->|AI Adapter Pattern| K{API Key Exists?}
     K -->|Cloudflare| L[Vectorize + Workers AI]
     K -->|Standard ENV| M[Gemini API direct]
-```
+    
+    N[Resume Download] -->|Client Side WASM| O[@react-pdf/renderer]
 
 ## Core Pillars
 
@@ -42,5 +44,10 @@ graph TD
    - For production deployments, Cloudflare Workers handles embeddings and RAG via Vectorize and D1 to achieve sub-50ms TTFT (Time To First Token).
    - For open-source forkability, an adapter gracefully degrades to calling the Gemini REST API if standard `.env` keys are used instead of Cloudflare bindings.
 
-5. **Test-Driven Development (TDD):**
+5. **Phase 6 God-Tier Upgrades:**
+   - **TSL WebGPU Shaders:** We explicitly avoid R3F main-thread bottlenecks by utilizing Three Shading Language (TSL) uniforms modified inside `useFrame` for Audio-Reactive WebGPU physics.
+   - **Client-Side WASM PDFs:** We utilize `@react-pdf/renderer` for zero-latency, edge-free PDF generation.
+   - **Focus Mode Frameloop Control:** The WebGPU canvas gracefully suspends via `frameloop="never"` bound to Zustand, preventing background battery drain.
+
+6. **Test-Driven Development (TDD):**
    - All core logic, config parsing, and AI endpoints are tested using Vitest before integration into the UI.

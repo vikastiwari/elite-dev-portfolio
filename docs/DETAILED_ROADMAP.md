@@ -28,3 +28,16 @@ The execution of this high-performance portfolio follows a strict Phased Impleme
 - Build the Web Audio API procedural sound engine for hovers/clicks and background atmosphere.
 - Finalize the 4-6 Theme configurations and wire them to shader uniforms.
 - Run Lighthouse and WebGL profiling (targeting 120 FPS desktop, 60 FPS mobile).
+
+## Phase 5: Testing & CI/CD (Week 8)
+- Implement Playwright E2E tests for WebGL interactions.
+- Set up GitHub Actions for automated deployment to Cloudflare Pages.
+
+## Phase 6: God-Tier MVP (Current Phase)
+- **Executive Override (Focus Mode):** Implement `frameloop="never"` suspension to gracefully toggle to a 2D high-contrast resume, preventing background WebGPU battery drain.
+- **Audio-Reactive AI Core:** Build a TSL Compute Shader bound to the WebAudio API AnalyserNode, mutated safely outside the React render lifecycle.
+- **Instant WASM PDF Resume:** Isolate a `src/components/pdf/` architecture and utilize `@react-pdf/renderer` for instantaneous client-side PDF downloads.
+
+## Phase 7: Future Expansions
+- **In-Browser ZK-Proof Vault:** Implement Circom circuits + `snarkjs` for recruiter verification.
+- **Live GitHub Commits Globe:** Shift to a massively parallel TSL compute shader supporting 1,000,000+ particles and bezier curves.

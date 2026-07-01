@@ -21,5 +21,10 @@ React Three Fiber components executing within the WebGL context.
 Serverless endpoints handling backend logic.
 - `chat.ts`: The RAG AI endpoint utilizing the Adapter Pattern for Cloudflare vs Standard API keys.
 
+## `src/components/pdf/`
+Strictly isolated components specifically for WASM PDF generation.
+- **Rule:** Do NOT use Tailwind CSS or Astro styling here. Use `StyleSheet.create()` to satisfy the Yoga layout engine compiler requirements for `@react-pdf/renderer`.
+- `ResumePDF.tsx`: The core PDF document structure.
+
 ## `src/store/`
-- `useStore.ts`: Zustand store holding global state (active theme, camera position, selected project, AI chat history). Crucial for communicating between `dom/` and `canvas/` without prop drilling.
+- `useStore.ts`: Zustand store holding global state (active theme, camera position, selected project, AI chat history, `isFocusMode`). Crucial for communicating between `dom/` and `canvas/` without prop drilling.
