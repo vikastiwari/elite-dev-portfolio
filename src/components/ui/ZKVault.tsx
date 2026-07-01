@@ -72,20 +72,20 @@ export const ZKVault: React.FC = () => {
     };
 
     return (
-        <div className="w-full max-w-3xl mx-auto my-16 p-[1px] bg-gradient-to-r from-accent/20 via-accent/50 to-accent/20 rounded-2xl relative overflow-hidden group">
-            <div className="absolute inset-0 bg-accent/5 blur-3xl rounded-3xl -z-10 transition-opacity duration-1000 group-hover:bg-accent/10" />
+        <div className="w-full max-w-3xl mx-auto my-16 p-[1px] bg-gradient-to-r from-[var(--color-primary)]/20 via-[var(--color-primary)]/50 to-[var(--color-primary)]/20 rounded-2xl relative overflow-hidden group">
+            <div className="absolute inset-0 bg-[var(--color-primary)]/5 blur-3xl rounded-3xl -z-10 transition-opacity duration-1000 group-hover:bg-[var(--color-primary)]/10" />
             
-            <div className="bg-black/80 backdrop-blur-xl w-full h-full rounded-2xl p-8 border border-white/10 relative z-10">
+            <div className="bg-[var(--color-bg-secondary)]/90 backdrop-blur-xl w-full h-full rounded-2xl p-8 border border-[var(--color-primary)]/10 relative z-10">
                 <div className="flex items-center gap-3 mb-6">
                     {status === 'unlocked' ? (
-                        <Unlock className="w-8 h-8 text-accent animate-pulse" />
+                        <Unlock className="w-8 h-8 text-[var(--color-primary)] animate-pulse" />
                     ) : (
-                        <Lock className={`w-8 h-8 ${status === 'error' ? 'text-red-500' : 'text-accent'}`} />
+                        <Lock className={`w-8 h-8 ${status === 'error' ? 'text-red-500' : 'text-[var(--color-primary)]'}`} />
                     )}
-                    <h2 className="text-2xl font-bold tracking-tight text-white">Recruiter VIP Vault</h2>
+                    <h2 className="text-2xl font-bold tracking-tight text-[var(--color-text)]">Recruiter VIP Vault</h2>
                     <div className="ml-auto flex items-center gap-2">
-                        <Cpu className={`w-5 h-5 ${snarkjsLoaded ? 'text-accent' : 'text-gray-500'} ${status === 'verifying' ? 'animate-spin' : ''}`} />
-                        <span className="text-xs text-white/40 uppercase tracking-widest font-mono">
+                        <Cpu className={`w-5 h-5 ${snarkjsLoaded ? 'text-[var(--color-primary)]' : 'text-gray-500'} ${status === 'verifying' ? 'animate-spin' : ''}`} />
+                        <span className="text-xs text-[var(--color-text)]/40 uppercase tracking-widest font-mono">
                             {snarkjsLoaded ? 'snarkjs.wasm ready' : 'loading engine...'}
                         </span>
                     </div>
@@ -94,7 +94,7 @@ export const ZKVault: React.FC = () => {
                 {status !== 'unlocked' ? (
                     <div className="grid md:grid-cols-2 gap-8">
                         <div>
-                            <p className="text-white/60 mb-6 text-sm">
+                            <p className="text-[var(--color-text)]/60 mb-6 text-sm">
                                 Enter your exclusive access code. This component uses Circom and snarkjs to run a Zero-Knowledge Proof (Groth16) entirely client-side. The code is never sent to a server.
                             </p>
                             
@@ -103,21 +103,22 @@ export const ZKVault: React.FC = () => {
                                     type="password"
                                     value={code}
                                     onChange={(e) => setCode(e.target.value)}
+                                    onKeyDown={(e) => { if (e.key === 'Enter') handleUnlock(); }}
                                     placeholder="Enter 6-digit Code"
-                                    className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white font-mono w-full focus:outline-none focus:border-accent/50 transition-colors"
+                                    className="bg-[var(--color-bg)]/50 border border-[var(--color-primary)]/20 rounded-lg px-4 py-2 text-[var(--color-text)] font-mono w-full focus:outline-none focus:border-[var(--color-primary)]/80 transition-colors"
                                     disabled={status === 'verifying'}
                                 />
                                 <button 
                                     onClick={handleUnlock}
                                     disabled={status === 'verifying' || !code || !snarkjsLoaded}
-                                    className="bg-accent text-black font-bold px-6 py-2 rounded-lg hover:bg-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="bg-[var(--color-primary)] text-[var(--color-bg)] font-bold px-6 py-2 rounded-lg hover:opacity-80 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {status === 'verifying' ? 'Proving...' : 'Unlock'}
                                 </button>
                             </div>
                         </div>
 
-                        <div className="bg-black/50 border border-white/5 rounded-lg p-4 font-mono text-xs text-accent/80 h-32 overflow-y-auto flex flex-col justify-end">
+                        <div className="bg-[var(--color-bg)]/50 border border-[var(--color-primary)]/10 rounded-lg p-4 font-mono text-xs text-[var(--color-primary)]/80 h-32 overflow-y-auto flex flex-col justify-end">
                             {logs.map((log, i) => (
                                 <div key={i} className={`${log.startsWith('[ERROR]') ? 'text-red-400' : ''}`}>
                                     {log}
@@ -125,46 +126,45 @@ export const ZKVault: React.FC = () => {
                             ))}
                         </div>
                     </div>
-                ) : (
                     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-                        <div className="bg-accent/10 border border-accent/30 rounded-xl p-6 mb-6">
-                            <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                                <ShieldAlert className="w-5 h-5 text-accent" />
+                        <div className="bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/30 rounded-xl p-6 mb-6">
+                            <h3 className="text-xl font-bold text-[var(--color-text)] mb-2 flex items-center gap-2">
+                                <ShieldAlert className="w-5 h-5 text-[var(--color-primary)]" />
                                 Vault Decrypted
                             </h3>
-                            <p className="text-white/70 text-sm mb-4">
+                            <p className="text-[var(--color-text)]/70 text-sm mb-4">
                                 Zero-Knowledge Proof mathematically verified. Welcome to the inner circle.
                             </p>
                         </div>
                         
                         <div className="grid md:grid-cols-2 gap-6">
-                            <div className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-colors">
-                                <h4 className="text-white font-bold mb-4 uppercase tracking-widest text-sm">Direct Contact</h4>
+                            <div className="bg-[var(--color-bg)]/50 border border-[var(--color-primary)]/10 rounded-xl p-6 hover:bg-[var(--color-bg)] transition-colors">
+                                <h4 className="text-[var(--color-text)] font-bold mb-4 uppercase tracking-widest text-sm">Direct Contact</h4>
                                 <div className="space-y-4 font-mono text-sm">
                                     <div>
-                                        <div className="text-white/40 mb-1">Mobile Number</div>
-                                        <div className="text-accent">+1 (555) 019-8372</div>
+                                        <div className="text-[var(--color-text)]/40 mb-1">Mobile Number</div>
+                                        <div className="text-[var(--color-primary)]">+1 (555) 019-8372</div>
                                     </div>
                                     <div>
-                                        <div className="text-white/40 mb-1">Secure Email</div>
-                                        <div className="text-accent">elite.dev@proton.me</div>
+                                        <div className="text-[var(--color-text)]/40 mb-1">Secure Email</div>
+                                        <div className="text-[var(--color-primary)]">elite.dev@proton.me</div>
                                     </div>
                                     <div>
-                                        <div className="text-white/40 mb-1">Priority Calendar</div>
+                                        <div className="text-[var(--color-text)]/40 mb-1">Priority Calendar</div>
                                         <a href="#" className="text-blue-400 hover:underline">calendly.com/elite-dev/vip</a>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="bg-white/5 border border-white/10 rounded-xl p-6 hover:bg-white/10 transition-colors flex flex-col justify-between">
+                            <div className="bg-[var(--color-bg)]/50 border border-[var(--color-primary)]/10 rounded-xl p-6 hover:bg-[var(--color-bg)] transition-colors flex flex-col justify-between">
                                 <div>
-                                    <h4 className="text-white font-bold mb-2 uppercase tracking-widest text-sm">Classified Project</h4>
-                                    <h5 className="text-xl font-bold text-accent mb-2">Project: OMNI</h5>
-                                    <p className="text-white/60 text-sm">
+                                    <h4 className="text-[var(--color-text)] font-bold mb-2 uppercase tracking-widest text-sm">Classified Project</h4>
+                                    <h5 className="text-xl font-bold text-[var(--color-primary)] mb-2">Project: OMNI</h5>
+                                    <p className="text-[var(--color-text)]/60 text-sm">
                                         A highly confidential distributed systems architecture currently under NDA. Includes massively parallel GPU compute and Web3 ZK-Rollups.
                                     </p>
                                 </div>
-                                <button className="w-full mt-4 bg-white/10 hover:bg-white/20 text-white font-bold py-2 rounded-lg transition-colors border border-white/10">
+                                <button className="w-full mt-4 bg-[var(--color-primary)]/10 hover:bg-[var(--color-primary)]/20 text-[var(--color-primary)] font-bold py-2 rounded-lg transition-colors border border-[var(--color-primary)]/20">
                                     View Full Architecture
                                 </button>
                             </div>

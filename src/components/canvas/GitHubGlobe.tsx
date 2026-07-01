@@ -33,7 +33,7 @@ export default function GitHubGlobe() {
 
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
-      camera.position.z = 10;
+      camera.position.z = 14;
       camera.position.y = 2;
       camera.lookAt(0, 0, 0);
 
@@ -142,8 +142,8 @@ export default function GitHubGlobe() {
   }, []);
 
   return (
-    <div className="relative w-full h-[600px] bg-dark-900 border-t border-white/10 flex items-center justify-center overflow-hidden">
-      <div className="absolute top-8 left-8 z-10 font-mono text-xs text-white/50 bg-black/50 p-4 rounded border border-white/10 backdrop-blur-md">
+    <div className="relative w-full h-[600px] bg-[var(--color-bg-secondary)] border-t border-[var(--color-primary)]/10 flex items-center justify-center overflow-hidden">
+      <div className="absolute top-8 left-8 z-10 font-mono text-xs text-[var(--color-text)] bg-[var(--color-bg)]/80 p-4 rounded border border-[var(--color-primary)]/20 backdrop-blur-md">
         <div className="text-neon-cyan mb-2">{'>> ORBITAL_COMMAND_SYNC'}</div>
         <div>MODULE: LIVE_GITHUB_COMMITS</div>
         <div>RENDERER: WEBGPU</div>
